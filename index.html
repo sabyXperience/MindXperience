@@ -12,13 +12,24 @@
 <link rel="manifest" href="data:application/json,{%22name%22:%22Lumi%C3%A8re%20Quotidienne%22,%22short_name%22:%22Lumi%C3%A8re%22,%22start_url%22:%22./%22,%22display%22:%22standalone%22,%22background_color%22:%22%230a0800%22,%22theme_color%22:%22%230a0800%22,%22description%22:%22Citations%20inspirantes%20du%20jour%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%20192%20192'%3E%3Crect%20width%3D'192'%20height%3D'192'%20rx%3D'40'%20fill%3D'%230a0800'/%3E%3Ctext%20x%3D'96'%20y%3D'130'%20font-size%3D'110'%20text-anchor%3D'middle'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a0800;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;padding:12px;padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:calc(12px + env(safe-area-inset-bottom));font-family:Georgia,serif}
-.frame{width:100%;max-width:720px;padding:3px;border-radius:22px;background:linear-gradient(135deg,#f5e070,#c8a96e 25%,#8a6020 50%,#f0cc50 70%,#c8a96e);height:fit-content}
+body{background:#0a0800;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;padding:0;font-family:Georgia,serif}
+.frame{width:100%;max-width:900px;padding:4px;border-radius:0;background:linear-gradient(135deg,#f5e070,#c8a96e 25%,#8a6020 50%,#f0cc50 70%,#c8a96e);height:fit-content;margin:0 auto}
+@media(min-width:600px){
+  body{padding:20px}
+  .frame{border-radius:22px;max-width:75vw}
+}
 .app{background:linear-gradient(160deg,#0c0a02,#140e00 50%,#0c0a02);border-radius:19px;padding:14px 12px 24px;color:#f0e4c0}
 .hdr{text-align:center;padding:6px 0 10px}
+.hdr-sphinx-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px}
+.hdr-sphinx{flex-shrink:0;opacity:0.85}
+.hdr-sphinx-flip{transform:scaleX(-1)}
+.hdr-title-col{flex:1;text-align:center}
 .hdr-s{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#c8a96e;margin-bottom:4px}
 .hdr-h{font-family:Palatino,Georgia,serif;font-size:20px;color:#f5e0a0;letter-spacing:3px;display:flex;align-items:center;justify-content:center;gap:10px}
 .hdr-eg{font-size:22px;opacity:0.85}
+.hdr-citation-jour{margin:8px 10px 4px;padding:10px 14px;background:rgba(200,169,110,0.06);border:1px solid rgba(200,169,110,0.2);border-radius:10px;text-align:center}
+.hdr-cit-texte{font-family:Palatino,Georgia,serif;font-style:italic;font-size:12px;color:#f0e4c0;line-height:1.5;margin-bottom:5px}
+.hdr-cit-auteur{font-size:10px;letter-spacing:1.5px;color:#c8a96e}
 .hdr-l{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:5px}
 .hl{flex:1;max-width:55px;height:.5px;background:linear-gradient(90deg,transparent,#c8a96e)}
 .hr{flex:1;max-width:55px;height:.5px;background:linear-gradient(90deg,#c8a96e,transparent)}
@@ -32,21 +43,23 @@ body{background:#0a0800;min-height:100vh;min-height:100dvh;display:flex;justify-
 .sr{flex:1;height:.5px;background:linear-gradient(90deg,rgba(200,169,110,.3),transparent)}
 .sd{width:3px;height:3px;background:rgba(200,169,110,.45);transform:rotate(45deg)}
 .cvwrap{margin:0 auto 12px;position:relative;max-width:680px;width:100%}
+.cv-color-overlay{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;display:flex;justify-content:center}
+.tcolor-on-canvas{background:rgba(10,8,0,0.55);backdrop-filter:blur(6px);border-radius:100px;padding:6px 12px;gap:8px;margin-bottom:0;border:1px solid rgba(200,169,110,0.2)}
 canvas{width:100%;display:block;border-radius:12px;border:1px solid rgba(200,169,110,.25);transition:opacity .35s}
 canvas.fmt-square{aspect-ratio:1}
 canvas.fmt-story{aspect-ratio:9/16;max-height:min(55vh,520px);width:auto;max-width:100%;margin:0 auto}
 canvas.fade{opacity:0}
-.tgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:6px}
+.tgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
 .tbtn{aspect-ratio:1;border-radius:9px;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:3px;transition:transform .15s}
 .tbtn:hover{transform:scale(1.07)}
 .tbtn.on{border-color:#c8a96e;box-shadow:0 0 8px rgba(200,169,110,.5)}
 .tbg{position:absolute;inset:0;background-size:cover;background-position:center}
 .tico{font-size:13px;position:relative;z-index:2;filter:drop-shadow(0 1px 4px rgba(0,0,0,1));line-height:1}
 .tlbl{font-size:9px;letter-spacing:.4px;text-transform:uppercase;color:#fff;position:relative;z-index:2;text-shadow:0 1px 5px #000,0 0 8px #000;margin-top:2px;font-weight:700}
-.fgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-.fbtn{border-radius:9px;cursor:pointer;border:1px solid rgba(200,169,110,.18);background:rgba(200,169,110,.03);padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fbtn{border-radius:9px;cursor:pointer;border:1px solid rgba(200,169,110,.18);background:rgba(200,169,110,.03);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
 .fbtn:hover,.fbtn.on{border-color:#c8a96e;background:rgba(200,169,110,.1)}
-.fprev{font-size:16px;color:#f0d890}
+.fprev{font-size:22px;color:#f0d890}
 .fname{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(200,169,110,.5)}
 .pr{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
 .pill{padding:6px 11px;border-radius:100px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;border:.5px solid rgba(200,169,110,.2);background:transparent;color:rgba(200,169,110,.45);transition:all .15s;font-family:Georgia,serif}
@@ -89,7 +102,7 @@ canvas.fade{opacity:0}
     gap: 4px;
   }
   .app { padding:12px 10px 32px; }
-  .tgrid { gap:3px; }
+  .tgrid { gap:5px; }
   .fgrid { gap:4px; }
   .fprev { font-size:18px; }
   .btn { letter-spacing:.8px; padding:10px 11px; }
@@ -116,7 +129,7 @@ canvas.fade{opacity:0}
   body { padding:8px; padding-top:calc(8px + env(safe-area-inset-top)); padding-bottom:calc(8px + env(safe-area-inset-bottom)); }
   .frame { border-radius:16px; }
   .app { border-radius:13px; padding:10px 8px 28px; }
-  .fgrid { grid-template-columns:repeat(3,1fr); gap:5px; }
+  .fgrid { gap:8px; }
   .fprev { font-size:20px; }
   .fname { font-size:9px; }
   .pill { font-size:9px; padding:5px 8px; letter-spacing:.3px; }
@@ -217,7 +230,7 @@ canvas.fade{opacity:0}
 .tsize-val{font-size:10px;color:rgba(200,169,110,.5);min-width:28px;text-align:right;font-family:Georgia,serif}
 
 /* ── TEXT COLOR SELECTOR ──────────────────────────────────── */
-.tcolor-wrap{display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.tcolor-wrap{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
 .tcolor-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(200,169,110,.4);flex-shrink:0}
 .tcolor-swatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
 .tcolor-swatch.on{border-color:#f0cc50;transform:scale(1.15);box-shadow:0 0 8px rgba(240,204,80,.4)}
@@ -380,7 +393,7 @@ canvas:active { cursor: grabbing; }
 /* Tablettes et desktop : mise en page plus aérée */
 @media (min-width: 600px) {
   .app { padding:16px 18px 28px; }
-  .tgrid { gap:6px; }
+  .tgrid { gap:10px; }
   .fgrid { gap:7px; }
   .tico { font-size:16px; }
   .btn { font-size:11px; letter-spacing:1.8px; padding:11px 18px; }
@@ -399,26 +412,29 @@ canvas:active { cursor: grabbing; }
 <body>
 <div class="frame"><div class="app">
 <div class="hdr">
-  <div class="hdr-s">&#10022; Lumière Quotidienne &#10022;</div>
-  <div class="hdr-h">
-    <span class="hdr-eg">✦</span>
-    Lumière Quotidienne
-    <span class="hdr-eg">✦</span>
+  <div class="hdr-sphinx-row">
+    <div class="hdr-sphinx">
+      <img src="./sphinx.png" alt="Sphinx" width="90" height="90" style="object-fit:contain;filter:drop-shadow(0 2px 8px rgba(200,169,110,0.4))">
+    </div>
+    <div class="hdr-title-col">
+      <div class="hdr-s">&#10022; Lumière Quotidienne &#10022;</div>
+      <div class="hdr-h">
+        <span class="hdr-eg">✦</span>
+        Citation du Jour
+        <span class="hdr-eg">✦</span>
+      </div>
+    </div>
+    <div class="hdr-sphinx">
+      <img src="./sphinx.png" alt="Sphinx" width="90" height="90" style="object-fit:contain;transform:scaleX(-1);filter:drop-shadow(0 2px 8px rgba(200,169,110,0.4))">
+    </div>
   </div>
   <div class="hdr-l"><div class="hl"></div><div class="hd"></div><div class="hr"></div></div>
 </div>
 
-<div class="cvwrap"><canvas id="CV" width="1080" height="1080" role="img" aria-label="Aperçu de la citation du jour"></canvas></div>
-
-<div class="lbl">Police d'écriture</div>
-<div class="tsize-wrap">
-  <span class="tsize-btn" onclick="tsizeAdj(-1)">A−</span>
-  <input class="tsize-slider" id="tsizeSlider" type="range" min="-3" max="3" value="0" step="1" oninput="tsizeChange(this.value)">
-  <span class="tsize-val" id="tsizeVal">100%</span>
-  <span class="tsize-btn" onclick="tsizeAdj(1)">A+</span>
+<div class="cvwrap">
+  <canvas id="CV" width="1080" height="1080" role="img" aria-label="Aperçu de la citation du jour"></canvas>
 </div>
 <div class="tcolor-wrap">
-  <span class="tcolor-lbl">Texte</span>
   <span class="tcolor-swatch on" data-col="auto" title="Auto" style="background:linear-gradient(135deg,#fff 50%,#1a0800 50%);border-color:#c8a96e"></span>
   <span class="tcolor-swatch" data-col="#ffffff" title="Blanc" style="background:#fff"></span>
   <span class="tcolor-swatch" data-col="#f0cc50" title="Doré" style="background:linear-gradient(135deg,#c8a96e,#f0cc50)"></span>
@@ -426,6 +442,14 @@ canvas:active { cursor: grabbing; }
   <span class="tcolor-swatch" data-col="#ffb0c0" title="Rose" style="background:#ffb0c0"></span>
   <span class="tcolor-swatch" data-col="#b0ffb0" title="Jade" style="background:#b0ffb0"></span>
   <span class="tcolor-swatch" data-col="#1a0800" title="Sombre" style="background:#1a0800;border-color:rgba(200,169,110,.3)"></span>
+</div>
+
+<div class="lbl">Police d'écriture</div>
+<div class="tsize-wrap">
+  <span class="tsize-btn" onclick="tsizeAdj(-1)">A−</span>
+  <input class="tsize-slider" id="tsizeSlider" type="range" min="-3" max="3" value="0" step="1" oninput="tsizeChange(this.value)">
+  <span class="tsize-val" id="tsizeVal">100%</span>
+  <span class="tsize-btn" onclick="tsizeAdj(1)">A+</span>
 </div>
 <div class="format-toggle">
   <span class="format-lbl">Format</span>
@@ -545,7 +569,8 @@ var NA = [
   {id:"calanque", lbl:"Calanque", ico:"&#9968;&#65039;", grad:["#0a0806","#3a2010","#6a5030","#c0a060"]},
   {id:"aurore",   lbl:"Aurore",   ico:"&#10024;",  grad:["#020412","#080a40","#1a1060","#60b0ff"]},
   {id:"ciel",     lbl:"Ciel",     ico:"&#9728;",   grad:["#c8a060","#e8c880","#f5e0a0","#ffffff"]},
-  {id:"avion",    lbl:"Voyage",   ico:"&#9992;",   grad:["#0a2a5a","#1a6a8a","#38c8d8","#a0f0f0"]},
+  {id:"desert",   lbl:"Désert",   ico:"&#127964;", grad:["#1a0e00","#5a2e00","#c87030","#f0c060"]},
+  {id:"maya",     lbl:"Maya",     ico:"&#127963;", grad:["#020a14","#041a2a","#086080","#20c0a0"]},
 ];
 
 var ALL = NA;
@@ -574,7 +599,9 @@ var P = {
     calanque:  "./photos/calanque.jpg",
     aurore:    "./photos/aurore.jpg",
     ciel:      "./photos/ciel.png",
-    avion:     "./photos/avion.png"
+    avion:     "./photos/avion.png",
+    desert:    "./photos/desert.jpg",
+    maya:      "./photos/maya.jpg"
   };
 
   Object.keys(P).forEach(function(id){
@@ -1843,16 +1870,7 @@ function draw(){
   CTX.restore();
   CTX.restore();
 
-  // LOGO ✦ Lumière Quotidienne (toujours visible, bas droite)
-  CTX.save();
-  CTX.font = "bold " + Math.round(H * 0.025) + "px Palatino,Georgia,serif";
-  CTX.textAlign = "right";
-  CTX.globalAlpha = 0.55;
-  CTX.fillStyle = "rgba(200,169,110,0.9)";
-  CTX.shadowColor = "rgba(0,0,0,0.8)";
-  CTX.shadowBlur = 6;
-  CTX.fillText("\u2736 Lumi\u00e8re Quotidienne", W - Math.round(W * 0.028), H - Math.round(H * 0.028));
-  CTX.restore();
+  // LOGO supprimé (watermark désactivé)
 
   if(!S.q) return;
 
@@ -2143,7 +2161,7 @@ function buildFonts(){
   var h = "";
   FONTS.forEach(function(f,i){
     h += '<div class="fbtn'+(i===S.font?" on":"")+'" data-f="'+i+'">'
-       + '<span class="fprev" style="font-family:'+f.fam+';font-style:'+f.style+'">Abc</span>'
+       + '<span class="fprev" style="font-family:'+f.fam+';font-style:'+f.style+'">'+f.nm+'</span>'
        + '<span class="fname">'+f.nm+'</span></div>';
   });
   document.getElementById("FG").innerHTML = h;
@@ -2301,7 +2319,7 @@ function saveImg(){
   octx.fillStyle=lt?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.45)";
   octx.fillRect(0,0,W,H);
   try{ octx.drawImage(CV,0,0); }catch(e){}
-  drawWatermark(octx, W, H);
+
 
   var filename = "citation-lumiere-"+Date.now()+".png";
 
@@ -2350,7 +2368,7 @@ function copyImg(){
   }
   octx.fillStyle=lt?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.45)"; octx.fillRect(0,0,W,H);
   try{ octx.drawImage(CV,0,0); }catch(e){}
-  drawWatermark(octx, W, H);
+
 
   oc.toBlob(function(blob){
     if(!blob){ toast("Non supporté"); return; }
@@ -2571,6 +2589,16 @@ function citationDuJour(){
   enableButtons();
   updateFavBtn();
   saveState();
+  // Afficher la citation dans le header sphinx
+  var hdrBox = document.getElementById('hdrCitJour');
+  var hdrTxt = document.getElementById('hdrCitTexte');
+  var hdrAut = document.getElementById('hdrCitAuteur');
+  if(hdrBox && hdrTxt && hdrAut){
+    var tr2 = item.tr[S.lang] || item.tr.fr;
+    hdrTxt.textContent = '\u201C' + tr2.q + '\u201D';
+    hdrAut.textContent = '\u2736 ' + tr2.a + ' \u2736';
+    hdrBox.style.display = 'block';
+  }
   var months = {
     fr:['janv.','f\u00e9vr.','mars','avr.','mai','juin','juil.','ao\u00fbt','sept.','oct.','nov.','d\u00e9c.'],
     en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -2608,7 +2636,7 @@ function shareNative(){
   octx.fillStyle=lt?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.45)";
   octx.fillRect(0,0,W,H);
   try{ octx.drawImage(CV,0,0); }catch(e){}
-  drawWatermark(octx, W, H);
+
 
   if(navigator.share){
     oc.toBlob(function(blob){
@@ -2901,17 +2929,7 @@ document.addEventListener('DOMContentLoaded', function(){
 // ================================================================
 // WATERMARK sur l'image exportée
 // ================================================================
-function drawWatermark(ctx, canvasW, canvasH){
-  ctx.save();
-  ctx.font = "bold 26px Palatino,Georgia,serif";
-  ctx.textAlign = "right";
-  ctx.globalAlpha = 0.55;
-  ctx.fillStyle = "rgba(200,169,110,0.9)";
-  ctx.shadowColor = "rgba(0,0,0,0.8)";
-  ctx.shadowBlur = 6;
-  ctx.fillText("✦ Lumière Quotidienne", canvasW - 30, canvasH - 30);
-  ctx.restore();
-}
+// Watermark désactivé
 
 // ================================================================
 // PWA — Service Worker & Install prompt
