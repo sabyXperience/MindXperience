@@ -1686,6 +1686,16 @@ var S = {th:"plage", font:0, lang:"fr", cat:"dev", q:null, used:{}, custom:null}
 var CV = document.getElementById("CV");
 var CTX = CV.getContext("2d");
 
+// Dessine une image en mode "cover" (recadrage centré, pas d'étirement)
+function drawImageCover(ctx, img, x, y, w, h){
+  var iw = img.naturalWidth || img.width;
+  var ih = img.naturalHeight || img.height;
+  var scale = Math.max(w/iw, h/ih);
+  var sw = iw * scale, sh = ih * scale;
+  var sx = x + (w - sw) / 2, sy = y + (h - sh) / 2;
+  ctx.drawImage(img, sx, sy, sw, sh);
+}
+
 function draw(){
   // Sync canvas resolution to current format
   CV.width = W; CV.height = H;
@@ -1695,7 +1705,7 @@ function draw(){
 
   // 1. FOND : photo ou dégradé
   if(t && IMGS[t.id]){
-    CTX.drawImage(IMGS[t.id], 0, 0, W, H);
+    drawImageCover(CTX, IMGS[t.id], 0, 0, W, H);
   } else {
     var stops = t ? (t.grad || t.fb) : ["#111","#333"];
     var grd = CTX.createLinearGradient(0,0,W,H);
@@ -2305,7 +2315,7 @@ function saveImg(){
   var lt = t && t.lt;
 
   if(t && IMGS[t.id]){
-    try { octx.drawImage(IMGS[t.id],0,0,W,H); } catch(e){
+    try { drawImageCover(octx, IMGS[t.id], 0, 0, W, H); } catch(e){
       var g=octx.createLinearGradient(0,0,W,H);
       (t.grad||["#111","#333"]).forEach(function(c,i,a){g.addColorStop(i/(a.length-1),c);});
       octx.fillStyle=g; octx.fillRect(0,0,W,H);
@@ -2359,7 +2369,7 @@ function copyImg(){
   var t = ALL.find(function(x){return x.id===S.th;});
   var lt = t && t.lt;
   if(t && IMGS[t.id]){
-    try { octx.drawImage(IMGS[t.id],0,0,W,H); } catch(e){}
+    try { drawImageCover(octx, IMGS[t.id], 0, 0, W, H); } catch(e){}
   } else {
     var stops=t?(t.grad||["#111","#333"]):["#111","#333"];
     var g=octx.createLinearGradient(0,0,W,H);
@@ -2626,7 +2636,7 @@ function shareNative(){
   var t = ALL.find(function(x){return x.id===S.th;});
   var lt = t && t.lt;
   if(t && IMGS[t.id]){
-    try{ octx.drawImage(IMGS[t.id],0,0,W,H); }catch(e){}
+    try{ drawImageCover(octx, IMGS[t.id], 0, 0, W, H); }catch(e){}
   } else {
     var stops=t?(t.grad||["#111","#333"]):["#111","#333"];
     var g=octx.createLinearGradient(0,0,W,H);
