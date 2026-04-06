@@ -15,11 +15,172 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0800;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;padding:0;font-family:Georgia,serif}
 .frame{width:100%;max-width:900px;padding:4px;border-radius:0;background:linear-gradient(135deg,#f5e070,#c8a96e 25%,#8a6020 50%,#f0cc50 70%,#c8a96e);height:fit-content;margin:0 auto}
+@media(max-width:899px){
+  canvas{width:100%}
+  canvas.fmt-square{max-height:min(80vh,700px);width:auto;max-width:100%;margin:0 auto}
+  canvas.fmt-story{max-height:min(55vh,520px);width:auto;max-width:100%;margin:0 auto}
+}
 @media(min-width:600px){
   body{padding:20px}
   .frame{border-radius:22px;max-width:75vw}
 }
 .app{background:linear-gradient(160deg,#0c0a02,#140e00 50%,#0c0a02);border-radius:19px;padding:14px 12px 24px;color:#f0e4c0}
+
+/* ── LAYOUT 2 COLONNES PC ────────────────────────────────── */
+@media(min-width:900px){
+  body{
+    height:100vh;height:100dvh;
+    overflow:hidden;
+    padding:20px;
+    align-items:center;
+  }
+  .frame{
+    width:100%;max-width:100%;
+    height:calc(100vh - 40px);height:calc(100dvh - 40px);
+    display:flex;flex-direction:column;
+  }
+  .app{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 280px 280px;
+    grid-template-rows:auto 1fr;
+    gap:0 18px;
+    padding:14px 18px;
+    overflow:hidden;
+  }
+
+  /* ── HEADER ── */
+  .hdr{
+    grid-column:1 / -1;grid-row:1;
+    padding:4px 0 10px;
+  }
+  .hdr-sphinx img{width:56px!important;height:56px!important}
+  .hdr-h{font-size:16px!important;letter-spacing:3px!important}
+  .hdr-s{font-size:9px!important}
+  .streak-badge{padding:3px 10px;font-size:10px}
+  .hdr-citation-jour{display:none}
+  .hdr-l{margin-top:4px}
+
+  /* ── COL GAUCHE : canvas ── */
+  .pc-col-left{
+    grid-column:1;grid-row:2;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:10px;
+    min-height:0;overflow:hidden;
+  }
+  .cvwrap{
+    flex:1;min-height:0;width:100%;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  #CV{
+    display:block!important;
+    max-height:100%!important;
+    max-width:100%!important;
+    width:auto!important;
+    height:auto!important;
+    border-radius:14px!important;
+  }
+  #CV.fmt-square{aspect-ratio:1/1!important}
+  #CV.fmt-story{aspect-ratio:9/16!important}
+  .tcolor-wrap{
+    flex-shrink:0;width:100%;
+    display:flex;justify-content:center;gap:8px;
+    padding:4px 0;
+  }
+  .tcolor-swatch{width:26px!important;height:26px!important}
+
+  /* ── COL MILIEU : thèmes + police + format ── */
+  .pc-col-mid{
+    grid-column:2;grid-row:2;
+    display:flex;flex-direction:column;gap:10px;
+    min-height:0;overflow-y:auto;overflow-x:hidden;
+    padding-right:4px;
+    align-items:stretch;
+  }
+  .pc-col-mid::-webkit-scrollbar{width:3px}
+  .pc-col-mid::-webkit-scrollbar-thumb{background:rgba(200,169,110,.25);border-radius:3px}
+  .pc-col-mid .lbl{width:100%;text-align:center}
+
+  /* Thèmes : 3 colonnes, pleine largeur */
+  .pc-col-mid .tgrid{
+    display:grid!important;
+    grid-template-columns:repeat(3,1fr)!important;
+    gap:5px!important;
+    margin-bottom:0!important;
+    width:100%;
+  }
+  .tbtn{aspect-ratio:4/3!important;border-radius:10px!important}
+  .tico{font-size:14px!important}
+  .tlbl{font-size:8px!important}
+
+  /* Polices : 3 colonnes pleine largeur */
+  .pc-col-mid .fgrid{
+    display:grid!important;
+    grid-template-columns:repeat(3,1fr)!important;
+    gap:5px!important;
+    width:100%;
+  }
+  .fbtn{padding:10px 4px!important;border-radius:8px!important}
+  .fprev{font-size:17px!important}
+  .fname{font-size:8px!important}
+
+  /* Taille texte */
+  .pc-col-mid .tsize-wrap{padding:8px 10px;margin-bottom:0;width:100%}
+
+  /* Format toggle */
+  .pc-col-mid .format-toggle{margin-bottom:0;width:100%;display:flex;justify-content:center;gap:6px}
+  .ftoggle-btn{font-size:10px!important;padding:7px 12px!important;flex:1}
+
+  /* ── COL DROITE : langue, catégorie, boutons ── */
+  .pc-col-right{
+    grid-column:3;grid-row:2;
+    display:flex;flex-direction:column;gap:8px;
+    min-height:0;overflow-y:auto;overflow-x:hidden;
+    padding-right:4px;
+    align-items:stretch;
+  }
+  .pc-col-right::-webkit-scrollbar{width:3px}
+  .pc-col-right::-webkit-scrollbar-thumb{background:rgba(200,169,110,.25);border-radius:3px}
+
+  /* Langue en grille 3x2 pleine largeur */
+  #LR{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important;width:100%}
+  #LR .pill{padding:5px 4px!important;font-size:9px!important;text-align:center!important;width:100%}
+
+  /* Catégories 2 colonnes pleine largeur */
+  #CR{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:5px!important;width:100%}
+  #CR .pill{font-size:9px!important;padding:5px 4px!important;text-align:center!important;letter-spacing:.2px!important;width:100%}
+
+  /* Labels */
+  .sep{margin:3px 0!important}
+  .lbl{font-size:10px!important;margin-bottom:4px!important;letter-spacing:2px!important}
+  .lbl-row{margin-bottom:4px!important;width:100%}
+  .cat-progress{margin-bottom:4px;width:100%}
+
+  /* Boutons navigation pleine largeur */
+  .btn-nav{
+    display:grid!important;
+    grid-template-columns:34px 1fr 1fr 1fr 34px 34px 34px!important;
+    gap:4px!important;margin-bottom:0!important;width:100%;
+  }
+  .btn-nav .btn{padding:9px 4px!important;font-size:9px!important;letter-spacing:.4px!important}
+
+  /* Boutons export pleine largeur */
+  .btn-export{
+    display:grid!important;
+    grid-template-columns:repeat(5,1fr)!important;
+    gap:4px!important;margin-bottom:0!important;width:100%;
+  }
+  .btn-export .btn{padding:9px 4px!important;font-size:9px!important}
+
+  /* Recherche & perso */
+  #bSearch,#bCustom{font-size:9px!important;padding:7px 10px!important;width:100%}
+  .date-wrap{width:100%}
+
+  /* Mobile elements cachés */
+  .col-left,.col-right{display:none!important}
+}
 .hdr{text-align:center;padding:6px 0 10px}
 .hdr-sphinx-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px}
 .hdr-sphinx{flex-shrink:0;opacity:0.85}
@@ -47,9 +208,9 @@ body{background:#0a0800;min-height:100vh;min-height:100dvh;display:flex;justify-
 .cvwrap{margin:0 auto 12px;position:relative;max-width:680px;width:100%}
 .cv-color-overlay{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;display:flex;justify-content:center}
 .tcolor-on-canvas{background:rgba(10,8,0,0.55);backdrop-filter:blur(6px);border-radius:100px;padding:6px 12px;gap:8px;margin-bottom:0;border:1px solid rgba(200,169,110,0.2)}
-canvas{width:100%;display:block;border-radius:12px;border:1px solid rgba(200,169,110,.25);transition:opacity .35s}
+canvas{display:block;border-radius:12px;border:1px solid rgba(200,169,110,.25);transition:opacity .35s}
 canvas.fmt-square{aspect-ratio:1}
-canvas.fmt-story{aspect-ratio:9/16;max-height:min(55vh,520px);width:auto;max-width:100%;margin:0 auto}
+canvas.fmt-story{aspect-ratio:9/16}
 canvas.fade{opacity:0}
 .tgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
 .tbtn{aspect-ratio:1;border-radius:9px;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:3px;transition:transform .15s}
@@ -467,115 +628,117 @@ canvas:active { cursor: grabbing; }
   </div>
 </div>
 
-<div class="cvwrap">
-  <canvas id="CV" width="1080" height="1080" role="img" aria-label="Aperçu de la citation du jour"></canvas>
-</div>
-<div class="tcolor-wrap">
-  <span class="tcolor-swatch on" data-col="auto" title="Auto" style="background:linear-gradient(135deg,#fff 50%,#1a0800 50%);border-color:#c8a96e"></span>
-  <span class="tcolor-swatch" data-col="#ffffff" title="Blanc" style="background:#fff"></span>
-  <span class="tcolor-swatch" data-col="#f0cc50" title="Doré" style="background:linear-gradient(135deg,#c8a96e,#f0cc50)"></span>
-  <span class="tcolor-swatch" data-col="#a0e8ff" title="Azur" style="background:#a0e8ff"></span>
-  <span class="tcolor-swatch" data-col="#ffb0c0" title="Rose" style="background:#ffb0c0"></span>
-  <span class="tcolor-swatch" data-col="#b0ffb0" title="Jade" style="background:#b0ffb0"></span>
-  <span class="tcolor-swatch" data-col="#1a0800" title="Sombre" style="background:#1a0800;border-color:rgba(200,169,110,.3)"></span>
-</div>
-
-<div class="lbl">Police d'écriture</div>
-<div class="tsize-wrap">
-  <span class="tsize-btn" onclick="tsizeAdj(-1)">A−</span>
-  <input class="tsize-slider" id="tsizeSlider" type="range" min="-3" max="3" value="0" step="1" oninput="tsizeChange(this.value)">
-  <span class="tsize-val" id="tsizeVal">100%</span>
-  <span class="tsize-btn" onclick="tsizeAdj(1)">A+</span>
-</div>
-<div class="format-toggle">
-  <span class="format-lbl">Format</span>
-  <button class="ftoggle-btn on" id="fmtPost" onclick="setFormat('post')"><span class="ftoggle-icon">⬛</span>Post 1:1</button>
-  <button class="ftoggle-btn" id="fmtStory" onclick="setFormat('story')"><span class="ftoggle-icon">📱</span>Story 9:16</button>
-</div>
-<div class="fgrid" id="FG"></div>
-<div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
-
-<div class="lbl">Thèmes</div>
-<div class="tgrid" id="GNA"></div>
-<div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
-
-<div class="lbl">Langue</div>
-<div class="pr" id="LR">
-  <button class="pill on" data-v="fr">&#127467;&#127479; Français</button>
-  <button class="pill" data-v="en">&#127468;&#127463; English</button>
-  <button class="pill" data-v="es">&#127466;&#127480; Español</button>
-  <button class="pill" data-v="it">&#127470;&#127481; Italiano</button>
-  <button class="pill" data-v="de">&#127465;&#127466; Deutsch</button>
-  <button class="pill" data-v="pt">&#127477;&#127481; Português</button>
-</div>
-<div class="sp"></div>
-
-<div class="lbl-row">
-  <span class="lbl">Catégorie</span>
-  <span class="badge" id="badge">0/0</span>
-</div>
-<div class="cat-progress"><div class="cat-progress-bar" id="catBar" style="width:0%"></div></div>
-<div class="pr" id="CR">
-  <button class="pill on" data-v="dev">Développement</button>
-  <button class="pill" data-v="zen">Bien-être</button>
-  <button class="pill" data-v="sante">Santé</button>
-  <button class="pill" data-v="mind">Mindfulness</button>
-  <button class="pill" data-v="moti">Motivation</button>
-  <button class="pill" data-v="amour">Amour</button>
-  <button class="pill" data-v="courage">Courage</button>
-  <button class="pill" data-v="gratitude">Gratitude</button>
-  <button class="pill" data-v="philo">&#127981; Philosophie</button>
-</div>
-<div class="sp"></div>
-
-<div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
-
-<!-- RECHERCHE -->
-<div class="search-wrap" id="SW" style="display:none">
-  <div class="search-tabs">
-    <button class="stab on" id="stab-kw" onclick="setSearchTab('kw')">&#128269; Mot-clé</button>
-    <button class="stab" id="stab-au" onclick="setSearchTab('au')">&#9998; Auteur</button>
+<!-- COL GAUCHE : canvas + couleurs texte -->
+<div class="pc-col-left">
+  <div class="cvwrap">
+    <canvas id="CV" width="1080" height="1080" role="img" aria-label="Aperçu de la citation du jour"></canvas>
   </div>
-  <div class="search-row">
-    <input class="search-inp" id="searchInp" type="text" placeholder="Rechercher…" oninput="doSearch()" autocomplete="off" />
-    <button class="search-clear" onclick="clearSearch()" title="Effacer" aria-label="Effacer la recherche">✕</button>
-  </div>
-  <div class="search-count" id="searchCount"></div>
-  <div class="search-results" id="searchRes" style="display:none"></div>
-</div>
-<button class="btn bout btn-full" onclick="toggleSearch()" id="bSearch">&#128269; Rechercher une citation</button>
-
-<div class="custom-wrap" id="CW">
-  <textarea class="custom-inp" id="cQuote" rows="3" placeholder="Écris ta citation ici..."></textarea>
-  <div class="custom-row">
-    <input class="custom-author" id="cAuthor" type="text" placeholder="Auteur (optionnel)">
-    <button class="btn bgold" onclick="applyCustom()" style="padding:6px 14px">&#10003; Appliquer</button>
+  <div class="tcolor-wrap">
+    <span class="tcolor-swatch on" data-col="auto" title="Auto" style="background:linear-gradient(135deg,#fff 50%,#1a0800 50%);border-color:#c8a96e"></span>
+    <span class="tcolor-swatch" data-col="#ffffff" title="Blanc" style="background:#fff"></span>
+    <span class="tcolor-swatch" data-col="#f0cc50" title="Doré" style="background:linear-gradient(135deg,#c8a96e,#f0cc50)"></span>
+    <span class="tcolor-swatch" data-col="#a0e8ff" title="Azur" style="background:#a0e8ff"></span>
+    <span class="tcolor-swatch" data-col="#ffb0c0" title="Rose" style="background:#ffb0c0"></span>
+    <span class="tcolor-swatch" data-col="#b0ffb0" title="Jade" style="background:#b0ffb0"></span>
+    <span class="tcolor-swatch" data-col="#1a0800" title="Sombre" style="background:#1a0800;border-color:rgba(200,169,110,.3)"></span>
   </div>
 </div>
-<div class="date-wrap">
-  <span class="date-label">&#128197; Date</span>
-  <input class="date-inp" id="dateManuelle" type="text" placeholder="ex: Lundi 25 mars 2026" oninput="draw()" />
-  <button class="date-reset" onclick="document.getElementById('dateManuelle').value='';draw();" title="Réinitialiser" aria-label="Réinitialiser la date">✕</button>
-</div>
-<button class="btn bout btn-full" onclick="toggleCustom()" id="bCustom">&#9998; Citation personnalisée</button>
 
-<!-- Rangée navigation : ← | Nouvelle | Aléatoire | Du jour | Langue | ⌘ | Reset -->
-<div class="btn-nav">
-  <button class="btn bhistory btn-icon" id="bPREV" onclick="prevQ()" disabled title="Précédente">&#8592;</button>
-  <button class="btn bgold btn-main" onclick="newQ()">&#10022; Nouvelle</button>
-  <button class="btn brand btn-main" onclick="randomAll()">&#9733; Aléatoire</button>
-  <button class="btn bdujour btn-main" onclick="citationDuJour()">&#128197; Du jour</button>
-  <button class="btn bout btn-icon" id="bTR" onclick="nextLang()" disabled title="Langue">&#127758;</button>
-  <button class="btn bout btn-icon" onclick="showKbd()" title="Raccourcis">&#9000;</button>
-  <button class="btn breset btn-icon" onclick="resetUsed()" title="Reset historique">&#8635;</button>
+<!-- COL MILIEU : thèmes + polices + format -->
+<div class="pc-col-mid">
+  <div class="lbl">Thèmes</div>
+  <div class="tgrid" id="GNA"></div>
+  <div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
+  <div class="lbl">Police</div>
+  <div class="tsize-wrap">
+    <span class="tsize-btn" onclick="tsizeAdj(-1)">A−</span>
+    <input class="tsize-slider" id="tsizeSlider" type="range" min="-3" max="3" value="0" step="1" oninput="tsizeChange(this.value)">
+    <span class="tsize-val" id="tsizeVal">100%</span>
+    <span class="tsize-btn" onclick="tsizeAdj(1)">A+</span>
+  </div>
+  <div class="fgrid" id="FG"></div>
+  <div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
+  <div class="format-toggle">
+    <span class="format-lbl">Format</span>
+    <button class="ftoggle-btn on" id="fmtPost" onclick="setFormat('post')"><span class="ftoggle-icon">⬛</span>Post 1:1</button>
+    <button class="ftoggle-btn" id="fmtStory" onclick="setFormat('story')"><span class="ftoggle-icon">📱</span>Story 9:16</button>
+  </div>
 </div>
-<!-- Rangée export : Favoris | Enregistrer | Copier img | Caption | Partager -->
-<div class="btn-export">
-  <button class="btn bfav" id="bFV" onclick="toggleFav()" disabled>&#9825; Favoris<span class="fav-badge" id="favBadge" style="display:none">0</span></button>
-  <button class="btn bsave" id="bSV" onclick="saveImg()" disabled>&#128190; PNG</button>
-  <button class="btn bclip" id="bCI" onclick="copyImg()" disabled>&#128247; Copier</button>
-  <button class="btn bcopy" id="bCP" onclick="copyC()" disabled>&#128203; Caption</button>
-  <button class="btn bshare" id="bSH" onclick="shareNative()" disabled>&#128257; Partager</button>
+
+<!-- COL DROITE : langue, catégorie, boutons -->
+<div class="pc-col-right">
+  <div class="lbl">Langue</div>
+  <div class="pr" id="LR">
+    <button class="pill on" data-v="fr">&#127467;&#127479; FR</button>
+    <button class="pill" data-v="en">&#127468;&#127463; EN</button>
+    <button class="pill" data-v="es">&#127466;&#127480; ES</button>
+    <button class="pill" data-v="it">&#127470;&#127481; IT</button>
+    <button class="pill" data-v="de">&#127465;&#127466; DE</button>
+    <button class="pill" data-v="pt">&#127477;&#127481; PT</button>
+  </div>
+  <div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
+  <div class="lbl-row">
+    <span class="lbl">Catégorie</span>
+    <span class="badge" id="badge">0/0</span>
+  </div>
+  <div class="cat-progress"><div class="cat-progress-bar" id="catBar" style="width:0%"></div></div>
+  <div class="pr" id="CR">
+    <button class="pill on" data-v="dev">Développement</button>
+    <button class="pill" data-v="zen">Bien-être</button>
+    <button class="pill" data-v="sante">Santé</button>
+    <button class="pill" data-v="mind">Mindfulness</button>
+    <button class="pill" data-v="moti">Motivation</button>
+    <button class="pill" data-v="amour">Amour</button>
+    <button class="pill" data-v="courage">Courage</button>
+    <button class="pill" data-v="gratitude">Gratitude</button>
+    <button class="pill" data-v="philo">&#127981; Philo</button>
+  </div>
+  <div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
+  <!-- Navigation -->
+  <div class="btn-nav">
+    <button class="btn bhistory btn-icon" id="bPREV" onclick="prevQ()" disabled title="Précédente">&#8592;</button>
+    <button class="btn bgold btn-main" onclick="newQ()">&#10022; Nouvelle</button>
+    <button class="btn brand btn-main" onclick="randomAll()">&#9733; Aléat.</button>
+    <button class="btn bdujour btn-main" onclick="citationDuJour()">&#128197; Jour</button>
+    <button class="btn bout btn-icon" id="bTR" onclick="nextLang()" disabled title="Langue">&#127758;</button>
+    <button class="btn bout btn-icon" onclick="showKbd()" title="Raccourcis">&#9000;</button>
+    <button class="btn breset btn-icon" onclick="resetUsed()" title="Reset">&#8635;</button>
+  </div>
+  <!-- Export -->
+  <div class="btn-export">
+    <button class="btn bfav" id="bFV" onclick="toggleFav()" disabled>&#9825;<span class="fav-badge" id="favBadge" style="display:none">0</span></button>
+    <button class="btn bsave" id="bSV" onclick="saveImg()" disabled>&#128190; PNG</button>
+    <button class="btn bclip" id="bCI" onclick="copyImg()" disabled>&#128247;</button>
+    <button class="btn bcopy" id="bCP" onclick="copyC()" disabled>&#128203;</button>
+    <button class="btn bshare" id="bSH" onclick="shareNative()" disabled>&#128257;</button>
+  </div>
+  <!-- Recherche & custom (cachés sur PC par défaut) -->
+  <div class="search-wrap" id="SW" style="display:none">
+    <div class="search-tabs">
+      <button class="stab on" id="stab-kw" onclick="setSearchTab('kw')">&#128269; Mot-clé</button>
+      <button class="stab" id="stab-au" onclick="setSearchTab('au')">&#9998; Auteur</button>
+    </div>
+    <div class="search-row">
+      <input class="search-inp" id="searchInp" type="text" placeholder="Rechercher…" oninput="doSearch()" autocomplete="off" />
+      <button class="search-clear" onclick="clearSearch()" title="Effacer">✕</button>
+    </div>
+    <div class="search-count" id="searchCount"></div>
+    <div class="search-results" id="searchRes" style="display:none"></div>
+  </div>
+  <button class="btn bout btn-full" onclick="toggleSearch()" id="bSearch">&#128269; Rechercher</button>
+  <div class="custom-wrap" id="CW">
+    <textarea class="custom-inp" id="cQuote" rows="2" placeholder="Ta citation…"></textarea>
+    <div class="custom-row">
+      <input class="custom-author" id="cAuthor" type="text" placeholder="Auteur">
+      <button class="btn bgold" onclick="applyCustom()" style="padding:5px 10px">&#10003;</button>
+    </div>
+  </div>
+  <div class="date-wrap">
+    <span class="date-label">&#128197;</span>
+    <input class="date-inp" id="dateManuelle" type="text" placeholder="Lundi 25 mars…" oninput="draw()" />
+    <button class="date-reset" onclick="document.getElementById('dateManuelle').value='';draw();">✕</button>
+  </div>
+  <button class="btn bout btn-full" onclick="toggleCustom()" id="bCustom">&#9998; Personnaliser</button>
 </div>
 </div></div>
 <div class="toast" id="TT"></div>
