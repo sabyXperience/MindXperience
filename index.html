@@ -49,10 +49,13 @@ body{background:#0a0800;min-height:100vh;min-height:100dvh;display:flex;justify-
 .cvwrap{margin:0 auto 12px;position:relative;max-width:680px;width:100%}
 .cv-color-overlay{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;display:flex;justify-content:center}
 .tcolor-on-canvas{background:rgba(10,8,0,0.55);backdrop-filter:blur(6px);border-radius:100px;padding:6px 12px;gap:8px;margin-bottom:0;border:1px solid rgba(200,169,110,0.2)}
-canvas{display:block;border-radius:12px;border:1px solid rgba(200,169,110,.25);transition:opacity .35s}
+canvas{display:block;border-radius:12px;border:1px solid rgba(200,169,110,.25);transition:opacity .25s ease, transform .25s ease}
 canvas.fmt-square{aspect-ratio:1}
 canvas.fmt-story{aspect-ratio:9/16}
-canvas.fade{opacity:0}
+canvas.fmt-landscape{aspect-ratio:16/9}
+canvas.fade{opacity:0;transform:scale(0.97) translateY(4px)}
+canvas.fade-in{animation:cvFadeIn .25s ease forwards}
+@keyframes cvFadeIn{from{opacity:0;transform:scale(0.97) translateY(-4px)}to{opacity:1;transform:none}}
 .tgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
 .tbtn{aspect-ratio:1;min-height:40px;border-radius:9px;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:3px;transition:transform .15s}
 .tbtn:hover{transform:scale(1.07)}
@@ -73,15 +76,15 @@ canvas.fade{opacity:0}
 /* Rangée navigation */
 .btn-nav {
   display: grid;
-  grid-template-columns: 42px 1fr 1fr 1fr 42px 42px 42px;
-  gap: 5px;
+  grid-template-columns: 38px 38px 1fr 1fr 1fr 38px 38px 38px 38px;
+  gap: 4px;
   margin-bottom: 7px;
 }
 /* Rangée export */
 .btn-export {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
   margin-bottom: 7px;
 }
 /* Boutons icône (carrés) */
@@ -112,7 +115,7 @@ canvas.fade{opacity:0}
 
 /* ── BARRE TAILLE TEXTE AMÉLIORÉE ────────────────────────── */
 .tsize-wrap{display:flex;align-items:center;gap:8px;margin-bottom:10px;background:rgba(200,169,110,.04);border:1px solid rgba(200,169,110,.15);border-radius:10px;padding:8px 12px}
-.tsize-btn{background:linear-gradient(135deg,rgba(200,169,110,.1),rgba(200,169,110,.06));border:1px solid rgba(200,169,110,.3);border-radius:8px;color:#c8a96e;font-size:13px;padding:5px 11px;cursor:pointer;font-family:Georgia,serif;transition:all .15s;flex-shrink:0;line-height:1;font-weight:700}
+.tsize-btn{background:linear-gradient(135deg,rgba(200,169,110,.1),rgba(200,169,110,.06));border:1px solid rgba(200,169,110,.3);border-radius:8px;color:#c8a96e;font-size:13px;padding:5px 11px;cursor:pointer;font-family:Georgia,serif;transition:all .15s;flex-shrink:0;line-height:1;font-weight:700;min-width:40px;min-height:40px;display:inline-flex;align-items:center;justify-content:center}
 .tsize-btn:hover{background:rgba(200,169,110,.2);border-color:#c8a96e}
 .tsize-val{font-size:11px;color:#c8a96e;min-width:36px;text-align:center;font-family:Georgia,serif;font-weight:700}
 
@@ -141,7 +144,7 @@ canvas.fade{opacity:0}
 .custom-author{flex:1;background:rgba(200,169,110,.05);border:1px solid rgba(200,169,110,.2);border-radius:8px;padding:6px 10px;color:#f0e4c0;font-family:Georgia,serif;font-size:11px;outline:none}
 .custom-author:focus{border-color:rgba(200,169,110,.5)}
 .custom-author::placeholder{color:rgba(200,169,110,.3)}
-.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c8a96e,#f0cc60);color:#080600;padding:8px 18px;border-radius:100px;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:999}
+.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c8a96e,#f0cc60);color:#080600;padding:8px 18px;border-radius:100px;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:999;max-width:90vw;white-space:normal;text-align:center}
 .toast.on{opacity:1}
 /* Date manuelle */
 .date-wrap{margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
@@ -183,9 +186,6 @@ canvas.fade{opacity:0}
 .ftoggle-icon{font-size:11px}
 
 /* ── TEXT SIZE SLIDER ─────────────────────────────────────── */
-.tsize-wrap{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.tsize-btn{background:none;border:1px solid rgba(200,169,110,.2);border-radius:6px;color:rgba(200,169,110,.6);font-size:12px;padding:4px 9px;cursor:pointer;font-family:Georgia,serif;transition:all .15s;flex-shrink:0;line-height:1}
-.tsize-btn:hover{border-color:#c8a96e;color:#c8a96e}
 .tsize-slider{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:rgba(200,169,110,.18);border-radius:2px;outline:none;cursor:pointer}
 .tsize-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#c8a96e,#f0cc60);cursor:pointer;border:2px solid #080600}
 .tsize-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#c8a96e,#f0cc60);cursor:pointer;border:2px solid #080600}
@@ -379,21 +379,52 @@ body.ui-light .custom-inp,body.ui-light .date-inp,body.ui-light .search-inp{back
 
   /* ── CANVAS STORY : span 2 colonnes sur PC ─────────────────── */
   .app.story-mode {
-    grid-template-columns: 1fr 1fr minmax(170px,220px) minmax(170px,220px) !important;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(160px,210px) minmax(160px,210px) !important;
+    grid-template-rows: auto minmax(0,1fr) minmax(0,1fr) !important;
+    align-items: start !important;
   }
   .app.story-mode .pc-col-left {
-    grid-column: 1 / 3 !important;
+    grid-column: 1 / 3 !important; grid-row: 2 / 4 !important;
+    overflow: hidden !important; min-height: 0 !important;
+    align-self: stretch !important;
   }
-  .app.story-mode .pc-col-mid {
-    grid-column: 3 !important;
+  .app.story-mode .pc-col-left .cvwrap {
+    flex: 1 !important; min-height: 0 !important;
+    width: 100% !important; overflow: hidden !important;
+    max-height: calc(100dvh - 180px) !important;
   }
-  .app.story-mode .pc-col-right {
-    grid-column: 4 !important;
+  .app.story-mode #CV {
+    max-height: 100% !important; width: auto !important; height: auto !important;
+    object-fit: contain !important;
   }
-  .app.story-mode .pc-col-actions {
-    grid-column: 4 !important;
-    grid-row: 3 !important;
+  .app.story-mode .pc-col-mid    { grid-column: 3 !important; grid-row: 2 / 4 !important; }
+  .app.story-mode .pc-col-right  { grid-column: 4 !important; grid-row: 2 !important; }
+  .app.story-mode .pc-col-actions{ grid-column: 4 !important; grid-row: 3 !important; }
+
+  /* ── CANVAS PAYSAGE 16:9 : span 3 colonnes sur PC ───────────── */
+  .app.landscape-mode {
+    grid-template-columns: 1fr 1fr 1fr minmax(180px,230px) !important;
+    grid-template-rows: auto minmax(0,auto) minmax(0,1fr) !important;
+    align-items: start !important;
   }
+  .app.landscape-mode .pc-col-left {
+    grid-column: 1 / 4 !important; grid-row: 2 !important;
+    overflow: hidden !important; min-height: 0 !important;
+    align-self: start !important;
+  }
+  .app.landscape-mode .pc-col-left .cvwrap {
+    flex: none !important; width: 100% !important;
+    overflow: hidden !important; min-height: 0 !important;
+  }
+  .app.landscape-mode #CV {
+    max-width: 100% !important; width: auto !important;
+    height: auto !important;
+    max-height: calc(100dvh - 200px) !important;
+    object-fit: contain !important;
+  }
+  .app.landscape-mode .pc-col-mid    { grid-column: 4 !important; grid-row: 2 / 4 !important; }
+  .app.landscape-mode .pc-col-right  { grid-column: 1 / 3 !important; grid-row: 3 !important; }
+  .app.landscape-mode .pc-col-actions{ grid-column: 3 / 5 !important; grid-row: 3 !important; }
 }
 .pc-card-search .search-results{max-height:160px}
 @media(min-width:900px){
@@ -474,9 +505,23 @@ body.ui-light .date-inp[type=date]::-webkit-calendar-picker-indicator{filter:non
 }
 .shortcut-hint.on { opacity:1; }
 
-/* ── SWIPE INDICATOR ── */
-canvas { cursor: grab; }
-canvas:active { cursor: grabbing; }
+/* ── SWIPE / CLICK INDICATOR ── */
+canvas { cursor: pointer; transition: opacity .2s ease; }
+canvas:hover { opacity: 0.96; }
+canvas:active { cursor: grabbing; opacity: 0.9; }
+
+/* ── CANVAS HINT BADGE ── */
+.cv-author-hint {
+  position:absolute; bottom:54px; left:50%; transform:translateX(-50%);
+  background:rgba(10,8,0,.75); backdrop-filter:blur(6px);
+  border:1px solid rgba(200,169,110,.3); border-radius:100px;
+  color:#c8a96e; font-size:9px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:4px 12px; white-space:nowrap; pointer-events:none;
+  opacity:0; transition:opacity .3s ease; z-index:12; font-family:Georgia,serif;
+}
+.cvwrap:hover .cv-author-hint { opacity:1; }
+/* Mobile : afficher le hint brièvement au chargement */
+.cv-author-hint.mobile-show { opacity:1; }
 
 /* ── PROGRESS BAR CATEGORIE ── */
 .cat-progress {
@@ -554,13 +599,25 @@ canvas:active { cursor: grabbing; }
   }
   .pc-col-actions .pc-card + .pc-card { margin-top:8px; }
 
-  /* Nav boutons : layout compact */
+  /* Nav boutons : layout compact mobile — 2 lignes (6+3) */
   .btn-nav {
-    grid-template-columns: 38px 1fr 1fr 1fr 38px 38px 38px;
+    grid-template-columns: 36px 36px 1fr 1fr 1fr 36px;
+    grid-template-rows: auto auto;
     gap: 4px;
     margin-bottom: 6px;
   }
-  .btn-export { gap: 4px; margin-bottom: 0; }
+  /* Ligne 1 : ← → Nouvelle Aléat. Jour langue */
+  .btn-nav > :nth-child(1) { grid-column:1; grid-row:1; }
+  .btn-nav > :nth-child(2) { grid-column:2; grid-row:1; }
+  .btn-nav > :nth-child(3) { grid-column:3; grid-row:1; }
+  .btn-nav > :nth-child(4) { grid-column:4; grid-row:1; }
+  .btn-nav > :nth-child(5) { grid-column:5; grid-row:1; }
+  .btn-nav > :nth-child(6) { grid-column:6; grid-row:1; }
+  /* Ligne 2 : thème aléat. kbd reset — sur 3 colonnes centrées */
+  .btn-nav > :nth-child(7) { grid-column:1; grid-row:2; }
+  .btn-nav > :nth-child(8) { grid-column:2; grid-row:2; }
+  .btn-nav > :nth-child(9) { grid-column:3; grid-row:2; }
+  .btn-export { gap: 4px; margin-bottom: 0; grid-template-columns: repeat(3,1fr)!important; }
   .btn { padding:10px 8px; font-size:10px; letter-spacing:.8px; }
 
   /* Recherche et perso : masquées sur mobile (boutons dédiés) */
@@ -619,18 +676,23 @@ canvas:active { cursor: grabbing; }
 ─────────────────────────────────────────────────────────────── */
 @media (max-width: 359px) {
   .btn-nav {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto auto auto;
     gap: 3px;
   }
-  .btn-nav .btn-main:nth-child(2) { grid-column:1/3; grid-row:1; }
-  .btn-nav .btn-main:nth-child(3) { grid-column:3;   grid-row:1; }
-  .btn-nav .btn-main:nth-child(4) { grid-column:4;   grid-row:1; }
-  .btn-nav .btn-icon:first-child  { grid-column:1;   grid-row:2; }
-  .btn-nav .btn-icon:nth-child(5) { grid-column:2;   grid-row:2; }
-  .btn-nav .btn-icon:nth-child(6) { grid-column:3;   grid-row:2; }
-  .btn-nav .btn-icon:nth-child(7) { grid-column:4;   grid-row:2; }
-  .btn-export { grid-template-columns:1fr 1fr; gap:3px; }
+  /* Ligne 1 : ← → Nouvelle */
+  .btn-nav > :nth-child(1) { grid-column:1; grid-row:1; }
+  .btn-nav > :nth-child(2) { grid-column:2; grid-row:1; }
+  .btn-nav > :nth-child(3) { grid-column:3; grid-row:1; }
+  /* Ligne 2 : Aléat. Jour langue */
+  .btn-nav > :nth-child(4) { grid-column:1; grid-row:2; }
+  .btn-nav > :nth-child(5) { grid-column:2; grid-row:2; }
+  .btn-nav > :nth-child(6) { grid-column:3; grid-row:2; }
+  /* Ligne 3 : thème, kbd, reset */
+  .btn-nav > :nth-child(7) { grid-column:1; grid-row:3; }
+  .btn-nav > :nth-child(8) { grid-column:2; grid-row:3; }
+  .btn-nav > :nth-child(9) { grid-column:3; grid-row:3; }
+  .btn-export { grid-template-columns:repeat(3,1fr); gap:3px; }
   #CR { grid-template-columns:repeat(2,1fr)!important; gap:3px!important; }
   .hdr-sphinx img { width:38px!important; height:38px!important; }
   .hdr-h { font-size:13px!important; letter-spacing:2px!important; }
@@ -653,7 +715,8 @@ canvas:active { cursor: grabbing; }
   .date-reset, .search-clear { min-width:38px; min-height:38px; }
   .fav-del-btn { width:32px; height:32px; }
   .sres-item { padding:12px 14px; }
-  .sres-author-chip { padding:8px 13px; min-height:36px; display:inline-flex; align-items:center; }
+  .sres-author-chip { padding:8px 13px; min-height:36px; display:inline-flex; align-items:center; gap:5px; }
+.chip-count { background:rgba(200,169,110,.2); border:1px solid rgba(200,169,110,.3); border-radius:100px; font-size:8px; padding:1px 5px; color:#c8a96e; font-family:Georgia,serif; }
   .stab { min-height:38px; }
   .ftoggle-btn { min-height:40px; }
 }
@@ -679,12 +742,13 @@ canvas:active { cursor: grabbing; }
   .pc-col-left   { grid-column:1; grid-row:2; display:flex!important; flex-direction:column; gap:8px; }
   .pc-col-actions{ grid-column:1; grid-row:3; }
   .pc-col-mid    { grid-column:2; grid-row:2; display:flex!important; flex-direction:column; gap:8px; overflow-y:auto; max-height:60vh; padding-right:4px; }
-  .pc-col-right  { grid-column:2; grid-row:3; }
+  .pc-col-right  { grid-column:2; grid-row:3; overflow-y:auto; max-height:40vh; padding-right:4px; }
 
   /* canvas tablette */
-  .cvwrap { max-width:100%; margin:0 auto 8px; }
-  canvas.fmt-square { max-height:min(55vh,440px); width:auto; max-width:100%; margin:0 auto; }
-  canvas.fmt-story  { max-height:min(65vh,520px); width:auto; max-width:100%; margin:0 auto; }
+  .cvwrap { max-width:100%; margin:0 auto 8px; overflow:hidden; }
+  canvas.fmt-square   { max-height:min(55vh,440px); width:auto; max-width:100%; margin:0 auto; display:block; }
+  canvas.fmt-story    { max-height:min(70vh,560px); width:auto; max-width:100%; margin:0 auto; display:block; }
+  canvas.fmt-landscape{ max-width:100%; width:auto; height:auto; margin:0 auto; display:block; }
 
   /* Réinitialiser les cadres PC sur tablette */
   .pc-col-left,
@@ -713,7 +777,10 @@ canvas:active { cursor: grabbing; }
   .lbl { font-size:10px; }
   .pill { font-size:10px; }
   .btn { font-size:9px; letter-spacing:.8px; }
-  .btn-nav { gap:4px; }
+  .btn-nav {
+    gap:3px;
+    grid-template-columns: 34px 34px 1fr 1fr 1fr 34px 34px 34px 34px !important;
+  }
   .btn-export { gap:4px; }
   .sep { margin:5px 0!important; }
   .format-toggle { gap:4px; }
@@ -751,15 +818,29 @@ canvas:active { cursor: grabbing; }
 /* ── Story canvas mobile ──────────────────────────────────── */
 @media(max-width:899px){
   canvas.fmt-story{
-    max-height:min(55vh,500px)!important;
+    max-height:min(70vh,520px)!important;
     width:auto!important;
     max-width:100%!important;
     margin:0 auto!important;
+    display:block!important;
+  }
+  canvas.fmt-landscape{
+    max-width:100%!important;
+    width:auto!important;
+    margin:0 auto!important;
+    display:block!important;
   }
 }
 
 @media (min-width: 900px) {
   body { padding:20px; height:100vh; height:100dvh; overflow:hidden; align-items:center; }
+  /* Sur écrans ≤1024px de hauteur, on autorise le scroll pour éviter que le contenu soit coupé */
+  @media (max-height: 700px) {
+    body { overflow:auto; align-items:flex-start; }
+    .frame { height:auto!important; overflow:visible!important; }
+    .app { height:auto!important; overflow:visible!important; }
+    .pc-col-left,.pc-col-mid,.pc-col-right,.pc-col-actions { overflow:visible!important; max-height:none!important; }
+  }
   .frame {
     width:100%; max-width:100%;
     height:calc(100vh - 40px); height:calc(100dvh - 40px);
@@ -768,12 +849,12 @@ canvas:active { cursor: grabbing; }
   .app {
     flex:1; min-height:0; height:0;
     display:grid !important;
-    grid-template-columns: 1fr minmax(200px,260px) minmax(170px,220px) minmax(170px,220px) !important;
+    grid-template-columns: 1fr minmax(190px,250px) minmax(160px,210px) minmax(160px,210px) !important;
     grid-template-rows: auto minmax(0,1fr) !important;
-    gap: 0 10px;
-    padding: 14px 20px 14px;
+    gap: 0 8px;
+    padding: 12px 16px 12px;
     overflow: hidden;
-    align-items: start;
+    align-items: stretch;
   }
 
   /* Header full width */
@@ -791,23 +872,41 @@ canvas:active { cursor: grabbing; }
     grid-column:1; grid-row:2;
     display:flex!important; flex-direction:column;
     align-items:center; justify-content:flex-start;
-    gap:10px; min-height:0; overflow:hidden;
+    /* height est défini par la grille (minmax(0,1fr)) */
+    min-height:0; overflow:hidden;
   }
-  .cvwrap { flex:1; min-height:0; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .cvwrap {
+    /* Prend toute la hauteur disponible MOINS la rangée de swatches (~50px) */
+    flex:1; min-height:0; width:100%;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .tcolor-wrap {
+    flex-shrink:0; width:100%;
+    display:flex!important; justify-content:center;
+    flex-wrap:wrap;
+    gap:8px; padding:4px 0 6px;
+    visibility:visible!important; opacity:1!important;
+  }
   #CV {
-    display:block!important; max-height:100%!important; max-width:100%!important;
-    width:auto!important; height:auto!important; border-radius:14px!important;
+    display:block!important;
+    /* Le canvas ne doit jamais dépasser le cvwrap */
+    max-height:100%!important; max-width:100%!important;
+    width:auto!important; height:auto!important;
+    border-radius:14px!important;
+    /* Assure que l aspect-ratio est respecté dans le conteneur flex */
+    object-fit:contain;
   }
-  #CV.fmt-square { aspect-ratio:1/1!important; }
-  #CV.fmt-story { aspect-ratio:9/16!important; }
-  .tcolor-wrap { flex-shrink:0; width:100%; display:flex; justify-content:center; gap:8px; padding:4px 0; }
+  #CV.fmt-square    { aspect-ratio:1/1!important; }
+  #CV.fmt-story     { aspect-ratio:9/16!important; }
+  #CV.fmt-landscape { aspect-ratio:16/9!important; }
   .tcolor-swatch { width:26px!important; height:26px!important; }
 
   /* Col 2 : thèmes + police + format */
   .pc-col-mid {
     grid-column:2; grid-row:2;
     display:flex!important; flex-direction:column; gap:8px;
-    min-height:0; height:100%; overflow-y:auto; overflow-x:hidden;
+    min-height:0; align-self:stretch; overflow-y:auto; overflow-x:hidden;
     padding-right:6px !important; align-items:stretch;
   }
   .pc-col-mid::-webkit-scrollbar { width:3px; }
@@ -829,7 +928,7 @@ canvas:active { cursor: grabbing; }
   .pc-col-right {
     grid-column:3; grid-row:2;
     display:flex!important; flex-direction:column; gap:7px;
-    min-height:0; height:100%; overflow-y:auto; overflow-x:hidden;
+    min-height:0; align-self:stretch; overflow-y:auto; overflow-x:hidden;
     padding-right:6px !important; align-items:stretch;
   }
   .pc-col-right::-webkit-scrollbar { width:3px; }
@@ -843,7 +942,7 @@ canvas:active { cursor: grabbing; }
   .pc-col-actions {
     grid-column:4; grid-row:2;
     display:flex!important; flex-direction:column; gap:7px;
-    min-height:0; overflow-y:auto; overflow-x:hidden;
+    min-height:0; align-self:stretch; overflow-y:auto; overflow-x:hidden;
     padding-right:6px !important; align-items:stretch;
   }
   .pc-col-actions::-webkit-scrollbar { width:3px; }
@@ -856,11 +955,11 @@ canvas:active { cursor: grabbing; }
   .cat-progress { margin-bottom:3px; width:100%; }
 
   /* Navigation */
-  .btn-nav { display:grid!important; grid-template-columns:30px 1fr 1fr 1fr 30px 30px 30px!important; gap:3px!important; margin-bottom:0!important; width:100%; }
+  .btn-nav { display:grid!important; grid-template-columns:28px 28px 1fr 1fr 1fr 28px 28px 28px 28px!important; gap:3px!important; margin-bottom:0!important; width:100%; }
   .btn-nav .btn { padding:8px 3px!important; font-size:8.5px!important; letter-spacing:.3px!important; }
 
   /* Export */
-  .btn-export { display:grid!important; grid-template-columns:repeat(2,1fr)!important; gap:3px!important; margin-bottom:0!important; width:100%; }
+  .btn-export { display:grid!important; grid-template-columns:repeat(3,1fr)!important; gap:3px!important; margin-bottom:0!important; width:100%; }
   .btn-export .btn { padding:8px 4px!important; font-size:8.5px!important; }
 
   /* Recherche & perso */
@@ -917,8 +1016,9 @@ canvas:active { cursor: grabbing; }
 
 <!-- COL GAUCHE : canvas + couleurs texte -->
 <div class="pc-col-left">
-  <div class="cvwrap">
+  <div class="cvwrap" id="cvwrap">
     <canvas id="CV" width="1080" height="1080" role="img" aria-label="Aperçu de la citation du jour"></canvas>
+    <div class="cv-author-hint" id="cvAuthorHint">✦ Cliquer : autre citation de cet auteur</div>
   </div>
   <div class="tcolor-wrap">
     <span class="tcolor-swatch on" data-col="auto" title="Auto — couleur automatique selon le thème" role="button" tabindex="0" aria-label="Couleur automatique" style="background:linear-gradient(135deg,#fff 50%,#1a0800 50%);border-color:#c8a96e"></span>
@@ -949,6 +1049,7 @@ canvas:active { cursor: grabbing; }
     <span class="format-lbl">Format</span>
     <button class="ftoggle-btn on" id="fmtPost" onclick="setFormat('post')"><span class="ftoggle-icon">⬛</span>Post 1:1</button>
     <button class="ftoggle-btn" id="fmtStory" onclick="setFormat('story')"><span class="ftoggle-icon">📱</span>Story 9:16</button>
+    <button class="ftoggle-btn" id="fmtLandscape" onclick="setFormat('landscape')"><span class="ftoggle-icon">🖥️</span>16:9</button>
   </div>
 </div>
 
@@ -970,15 +1071,15 @@ canvas:active { cursor: grabbing; }
   </div>
   <div class="cat-progress"><div class="cat-progress-bar" id="catBar" style="width:0%"></div></div>
   <div class="pr" id="CR">
-    <button class="pill on" data-v="dev">Développement</button>
-    <button class="pill" data-v="zen">Bien-être</button>
-    <button class="pill" data-v="sante">Santé</button>
-    <button class="pill" data-v="mind">Mindfulness</button>
-    <button class="pill" data-v="moti">Motivation</button>
-    <button class="pill" data-v="amour">Amour</button>
-    <button class="pill" data-v="courage">Courage</button>
-    <button class="pill" data-v="gratitude">Gratitude</button>
-    <button class="pill" data-v="philo">&#127981; Philo</button>
+    <button class="pill on" data-v="dev">🌱 Développement</button>
+    <button class="pill" data-v="zen">🍃 Bien-être</button>
+    <button class="pill" data-v="sante">💪 Santé</button>
+    <button class="pill" data-v="mind">🧘 Mindfulness</button>
+    <button class="pill" data-v="moti">🔥 Motivation</button>
+    <button class="pill" data-v="amour">❤️ Amour</button>
+    <button class="pill" data-v="courage">⚡ Courage</button>
+    <button class="pill" data-v="gratitude">🙏 Gratitude</button>
+    <button class="pill" data-v="philo">🏛️ Philo</button>
   </div>
 </div>
 
@@ -989,10 +1090,12 @@ canvas:active { cursor: grabbing; }
     <div class="lbl">Navigation</div>
     <div class="btn-nav">
       <button class="btn bhistory btn-icon" id="bPREV" onclick="prevQ()" disabled title="Précédente" aria-label="Citation précédente">&#8592;</button>
+      <button class="btn bhistory btn-icon" id="bNEXT" onclick="nextQ()" disabled title="Suivante (historique)" aria-label="Citation suivante dans l'historique">&#8594;</button>
       <button class="btn bgold btn-main" onclick="newQ()" aria-label="Nouvelle citation">&#10022; Nouvelle</button>
       <button class="btn brand btn-main" onclick="randomAll()" aria-label="Citation et thème aléatoires">&#9733; Aléat.</button>
       <button class="btn bdujour btn-main" onclick="citationDuJour()" aria-label="Citation du jour">&#128197; Jour</button>
       <button class="btn bout btn-icon" id="bTR" onclick="nextLang()" disabled title="Langue suivante" aria-label="Changer de langue">&#127758;</button>
+      <button class="btn bout btn-icon" id="bRandTheme" onclick="randomThemeOnly()" title="Thème aléatoire (garder la catégorie)" aria-label="Thème aléatoire">&#127777;</button>
       <button class="btn bout btn-icon" onclick="showKbd()" title="Raccourcis clavier" aria-label="Afficher les raccourcis clavier">&#9000;</button>
       <button class="btn breset btn-icon" onclick="resetUsed()" title="Réinitialiser l'historique" aria-label="Réinitialiser l'historique des citations">&#8635;</button>
     </div>
@@ -1003,7 +1106,9 @@ canvas:active { cursor: grabbing; }
     <div class="btn-export">
       <button class="btn bfav" id="bFV" onclick="toggleFav()" disabled aria-label="Ajouter aux favoris">&#9825; Favori<span class="fav-badge" id="favBadge" style="display:none">0</span></button>
       <button class="btn bsave" id="bSV" onclick="saveImg()" disabled aria-label="Enregistrer en PNG">&#128190; PNG</button>
-      <button class="btn bcopy" id="bCP" onclick="copyC()" disabled aria-label="Copier la citation">&#128203; Copier</button>
+      <button class="btn bcopy" id="bSVJ" onclick="saveImgJpeg()" disabled aria-label="Enregistrer en JPEG">&#128190; JPG</button>
+      <button class="btn bclip" id="bCI" onclick="copyImg()" disabled aria-label="Copier l'image">&#128203; Img</button>
+      <button class="btn bcopy" id="bCP" onclick="copyC()" disabled aria-label="Copier la citation">&#128203; Texte</button>
       <button class="btn bshare" id="bSH" onclick="shareNative()" disabled aria-label="Partager la citation">&#128257; Partager</button>
     </div>
   </div>
@@ -1293,30 +1398,30 @@ var DB = [
   {id:178,cat:"zen",tr:{fr:{q:"La paix, c'est quand le temps n'a pas d'importance lorsqu'il passe.",a:"Maria Schell"},en:{q:"Peace is when time doesn't matter as it passes by.",a:"Maria Schell"},es:{q:"La paz es cuando el tiempo no importa mientras pasa.",a:"Maria Schell"},it:{q:"La pace è quando il tempo non ha importanza mentre passa.",a:"Maria Schell"},de:{q:"Frieden ist, wenn die Zeit keine Rolle spielt, während sie vergeht.",a:"Maria Schell"},pt:{q:"A paz é quando o tempo não importa ao passar.",a:"Maria Schell"}}},
   {id:179,cat:"zen",tr:{fr:{q:"La beauté ne se voit pas, elle se ressent.",a:"Victor Hugo"},en:{q:"Beauty is not seen, it is felt.",a:"Victor Hugo"},es:{q:"La belleza no se ve, se siente.",a:"Victor Hugo"},it:{q:"La bellezza non si vede, si sente.",a:"Victor Hugo"},de:{q:"Schönheit sieht man nicht, man fühlt sie.",a:"Victor Hugo"},pt:{q:"A beleza não se vê, ela se sente.",a:"Victor Hugo"}}},
   {id:180,cat:"zen",tr:{fr:{q:"Nul ne peut atteindre l'aube sans passer par le chemin de la nuit.",a:"Khalil Gibran"},en:{q:"No one can reach the dawn without passing through the night.",a:"Khalil Gibran"},es:{q:"Nadie puede alcanzar el amanecer sin pasar por el camino de la noche.",a:"Khalil Gibran"},it:{q:"Nessuno può raggiungere l'alba senza passare per il cammino della notte.",a:"Khalil Gibran"},de:{q:"Niemand kann den Morgen erreichen, ohne durch die Nacht zu gehen.",a:"Khalil Gibran"},pt:{q:"Ninguém pode alcançar o amanhecer sem passar pelo caminho da noite.",a:"Khalil Gibran"}}},
-  {id:181,cat:"zen",tr:{fr:{q:"Le sage ne thésaurise pas. Plus il aide les autres, plus il a.",a:"Lao Tseu"},en:{q:"The sage does not hoard. The more he helps others, the more he has.",a:"Lao Tzu"},es:{q:"El sabio no acumula. Cuanto más ayuda a los demás, más tiene.",a:"Lao Tzu"},it:{q:"Il saggio non accumula. Più aiuta gli altri, più ha.",a:"Laozi"},de:{q:"Lerne, ruhig zu sein, und du wirst immer in dir Quellen der Stärke finden.",a:"Laozi"},pt:{q:"O sábio não acumula. Quanto mais ajuda os outros, mais tem.",a:"Laozi"}}},
+  {id:181,cat:"zen",tr:{fr:{q:"Le sage ne thésaurise pas. Plus il aide les autres, plus il a.",a:"Lao Tseu"},en:{q:"The sage does not hoard. The more he helps others, the more he has.",a:"Lao Tzu"},es:{q:"El sabio no acumula. Cuanto más ayuda a los demás, más tiene.",a:"Lao Tzu"},it:{q:"Il saggio non accumula. Più aiuta gli altri, più ha.",a:"Laozi"},de:{q:"Der Weise thesauriert nicht. Je mehr er anderen hilft, desto mehr hat er.",a:"Laozi"},pt:{q:"O sábio não acumula. Quanto mais ajuda os outros, mais tem.",a:"Laozi"}}},
   {id:182,cat:"zen",tr:{fr:{q:"En silence, l'âme trouve le chemin dans une lumière plus claire.",a:"Khalil Gibran"},en:{q:"In the silence of the soul, we find the path in a clearer light.",a:"Khalil Gibran"},es:{q:"En el silencio, el alma encuentra el camino en una luz más clara.",a:"Khalil Gibran"},it:{q:"Nel silenzio, l'anima trova il cammino in una luce più chiara.",a:"Khalil Gibran"},de:{q:"In der Stille findet die Seele ihren Weg in ein klareres Licht.",a:"Khalil Gibran"},pt:{q:"No silêncio, a alma encontra o caminho numa luz mais clara.",a:"Khalil Gibran"}}},
   {id:183,cat:"zen",tr:{fr:{q:"Apprenez à être calme et vous trouverez toujours en vous-même de quoi être heureux.",a:"J.R. Miller"},en:{q:"Learn to be calm and you will always find within yourself the happiness you desire.",a:"J.R. Miller"},es:{q:"Aprende a estar tranquilo y siempre encontrarás en ti mismo con qué ser feliz.",a:"J.R. Miller"},it:{q:"Impara a essere calmo e troverai sempre in te stesso di che essere felice.",a:"J.R. Miller"},de:{q:"Lerne, ruhig zu sein, und du wirst in dir stets das Glück finden, das du begehrst.",a:"J.R. Miller"},pt:{q:"Aprenda a ser calmo e sempre encontrará em si mesmo razão para ser feliz.",a:"J.R. Miller"}}},
-  {id:184,cat:"zen",tr:{fr:{q:"Quand vous lâchez ce que vous êtes, vous devenez ce que vous pourriez être.",a:"Lao Tseu"},en:{q:"When you let go of what you are, you become what you might be.",a:"Lao Tzu"},es:{q:"Cuando sueltas lo que eres, te conviertes en lo que podrías ser.",a:"Lao Tzu"},it:{q:"Quando lasci andare ciò che sei, diventi ciò che potresti essere.",a:"Laozi"},de:{q:"Das größte Gut ist Weisheit, die größte Tugend ist Güte.",a:"Laozi"},pt:{q:"Quando você larga o que é, torna-se o que poderia ser.",a:"Laozi"}}},
+  {id:184,cat:"zen",tr:{fr:{q:"Quand vous lâchez ce que vous êtes, vous devenez ce que vous pourriez être.",a:"Lao Tseu"},en:{q:"When you let go of what you are, you become what you might be.",a:"Lao Tzu"},es:{q:"Cuando sueltas lo que eres, te conviertes en lo que podrías ser.",a:"Lao Tzu"},it:{q:"Quando lasci andare ciò che sei, diventi ciò che potresti essere.",a:"Laozi"},de:{q:"Wenn du loslässt, was du bist, wirst du, was du sein könntest.",a:"Laozi"},pt:{q:"Quando você larga o que é, torna-se o que poderia ser.",a:"Laozi"}}},
   {id:185,cat:"zen",tr:{fr:{q:"Penser, c'est déjà agir.",a:"Descartes"},en:{q:"To think is to act.",a:"Descartes"},es:{q:"Pensar ya es actuar.",a:"Descartes"},it:{q:"Pensare è già agire.",a:"Descartes"},de:{q:"Denken ist bereits handeln.",a:"Descartes"},pt:{q:"Pensar já é agir.",a:"Descartes"}}},
   {id:186,cat:"zen",tr:{fr:{q:"Le plus grand bien est la sagesse, la plus grande vertu est la bonté.",a:"Khalil Gibran"},en:{q:"The greatest of all virtues is wisdom; the greatest of all goods is kindness.",a:"Khalil Gibran"},es:{q:"El mayor bien es la sabiduría, la mayor virtud es la bondad.",a:"Khalil Gibran"},it:{q:"Il bene più grande è la saggezza, la virtù più grande è la bontà.",a:"Khalil Gibran"},de:{q:"Das größte Gut ist die Weisheit, die größte Tugend ist die Güte.",a:"Khalil Gibran"},pt:{q:"O maior bem é a sabedoria, a maior virtude é a bondade.",a:"Khalil Gibran"}}},
-  {id:187,cat:"zen",tr:{fr:{q:"Les richesses n'ont pas de valeur en face de la santé.",a:"Montaigne"},en:{q:"Health is not valued till sickness comes.",a:"Montaigne"},es:{q:"La riqueza no tiene valor frente a la salud.",a:"Montaigne"},it:{q:"Le ricchezze non hanno valore di fronte alla salute.",a:"Montaigne"},de:{q:"Lebe im Einklang mit der Natur.",a:"Montaigne"},pt:{q:"A riqueza não tem valor diante da saúde.",a:"Montaigne"}}},
-  {id:188,cat:"zen",tr:{fr:{q:"L'excès en tout est un défaut.",a:"Confucius"},en:{q:"Everything in excess is opposed to nature.",a:"Confucius"},es:{q:"El exceso en todo es un defecto.",a:"Confucio"},it:{q:"L'eccesso in tutto è un difetto.",a:"Confucio"},de:{q:"Bleib ruhig. Der Sturm wird vergehen.",a:"Konfuzius"},pt:{q:"O excesso em tudo é um defeito.",a:"Confúcio"}}},
-  {id:189,cat:"zen",tr:{fr:{q:"Vis en accord avec la nature.",a:"Marc Aurèle"},en:{q:"Live according to nature.",a:"Marcus Aurelius"},es:{q:"Vive en armonía con la naturaleza.",a:"Marco Aurelio"},it:{q:"Vivi in accordo con la natura.",a:"Marco Aurelio"},de:{q:"Suche nicht außerhalb von dir, suche in dir.",a:"Marc Aurel"},pt:{q:"Viva de acordo com a natureza.",a:"Marco Aurélio"}}},
+  {id:187,cat:"zen",tr:{fr:{q:"Les richesses n'ont pas de valeur en face de la santé.",a:"Montaigne"},en:{q:"Health is not valued till sickness comes.",a:"Montaigne"},es:{q:"La riqueza no tiene valor frente a la salud.",a:"Montaigne"},it:{q:"Le ricchezze non hanno valore di fronte alla salute.",a:"Montaigne"},de:{q:"Reichtum hat keinen Wert gegenüber der Gesundheit.",a:"Montaigne"},pt:{q:"A riqueza não tem valor diante da saúde.",a:"Montaigne"}}},
+  {id:188,cat:"zen",tr:{fr:{q:"L'excès en tout est un défaut.",a:"Confucius"},en:{q:"Everything in excess is opposed to nature.",a:"Confucius"},es:{q:"El exceso en todo es un defecto.",a:"Confucio"},it:{q:"L'eccesso in tutto è un difetto.",a:"Confucio"},de:{q:"Übermäß in allem ist ein Fehler.",a:"Konfuzius"},pt:{q:"O excesso em tudo é um defeito.",a:"Confúcio"}}},
+  {id:189,cat:"zen",tr:{fr:{q:"Vis en accord avec la nature.",a:"Marc Aurèle"},en:{q:"Live according to nature.",a:"Marcus Aurelius"},es:{q:"Vive en armonía con la naturaleza.",a:"Marco Aurelio"},it:{q:"Vivi in accordo con la natura.",a:"Marco Aurelio"},de:{q:"Lebe im Einklang mit der Natur.",a:"Marc Aurel"},pt:{q:"Viva de acordo com a natureza.",a:"Marco Aurélio"}}},
   {id:190,cat:"zen",tr:{fr:{q:"Reste calme. La tempête passera.",a:"Rumi"},en:{q:"Stay calm. The storm will pass.",a:"Rumi"},es:{q:"Mantén la calma. La tormenta pasará.",a:"Rumi"},it:{q:"Rimani calmo. La tempesta passerà.",a:"Rumi"},de:{q:"Bleib ruhig. Der Sturm wird vorüberziehen.",a:"Rumi"},pt:{q:"Fique calmo. A tempestade passará.",a:"Rumi"}}},
   {id:191,cat:"zen",tr:{fr:{q:"Ne cherchez pas au-dehors de vous-même, cherchez en vous.",a:"Rumi"},en:{q:"Don't look outside yourself for the answer.",a:"Rumi"},es:{q:"No busques fuera de ti mismo, busca dentro de ti.",a:"Rumi"},it:{q:"Non cercare fuori da te, cerca dentro di te.",a:"Rumi"},de:{q:"Suche nicht draußen nach dir selbst; suche in dir.",a:"Rumi"},pt:{q:"Não busque fora de você mesmo, busque dentro.",a:"Rumi"}}},
-  {id:192,cat:"zen",tr:{fr:{q:"Un sourire est la plus courte distance entre deux personnes.",a:"Victor Borge"},en:{q:"A smile is the shortest distance between two people.",a:"Victor Borge"},es:{q:"Una sonrisa es la distancia más corta entre dos personas.",a:"Victor Borge"},it:{q:"Un sorriso è la distanza più breve tra due persone.",a:"Victor Borge"},de:{q:"Die Wahrheit ist ein Pfeil und das Tor ist geschlossen.",a:"Victor Borge"},pt:{q:"Um sorriso é a menor distância entre duas pessoas.",a:"Victor Borge"}}},
+  {id:192,cat:"zen",tr:{fr:{q:"Un sourire est la plus courte distance entre deux personnes.",a:"Victor Borge"},en:{q:"A smile is the shortest distance between two people.",a:"Victor Borge"},es:{q:"Una sonrisa es la distancia más corta entre dos personas.",a:"Victor Borge"},it:{q:"Un sorriso è la distanza più breve tra due persone.",a:"Victor Borge"},de:{q:"Ein Lächeln ist die kürzeste Distanz zwischen zwei Menschen.",a:"Victor Borge"},pt:{q:"Um sorriso é a menor distância entre duas pessoas.",a:"Victor Borge"}}},
   {id:193,cat:"zen",tr:{fr:{q:"Commence là où tu es. C'est assez.",a:"Thich Nhat Hanh"},en:{q:"Start where you are. It is enough.",a:"Thich Nhat Hanh"},es:{q:"Empieza donde estás. Es suficiente.",a:"Thich Nhat Hanh"},it:{q:"Inizia da dove sei. È abbastanza.",a:"Thich Nhat Hanh"},de:{q:"Beginne dort, wo du bist. Das genügt.",a:"Thich Nhat Hanh"},pt:{q:"Comece onde está. Isso é suficiente.",a:"Thich Nhat Hanh"}}},
-  {id:194,cat:"zen",tr:{fr:{q:"La vérité est une flèche et la porte est fermée.",a:"Rumi"},en:{q:"Truth is a sword that cuts through the door of illusion.",a:"Rumi"},es:{q:"La verdad es una flecha y la puerta está cerrada.",a:"Rumi"},it:{q:"La verità è una freccia e la porta è chiusa.",a:"Rumi"},de:{q:"Glück liegt in der Einfachheit.",a:"Rumi"},pt:{q:"A verdade é uma flecha e a porta está fechada.",a:"Rumi"}}},
+  {id:194,cat:"zen",tr:{fr:{q:"La vérité est une flèche et la porte est fermée.",a:"Rumi"},en:{q:"Truth is a sword that cuts through the door of illusion.",a:"Rumi"},es:{q:"La verdad es una flecha y la puerta está cerrada.",a:"Rumi"},it:{q:"La verità è una freccia e la porta è chiusa.",a:"Rumi"},de:{q:"Die Wahrheit ist ein Pfeil und die Tür ist geschlossen.",a:"Rumi"},pt:{q:"A verdade é uma flecha e a porta está fechada.",a:"Rumi"}}},
   {id:195,cat:"zen",tr:{fr:{q:"La paix intérieure commence au moment où vous choisissez de ne pas permettre à une autre personne ou un événement de contrôler vos émotions.",a:"Pema Chödrön"},en:{q:"Inner peace begins the moment you choose not to allow another person or event to control your emotions.",a:"Pema Chödrön"},es:{q:"La paz interior comienza cuando decides no permitir que otra persona o evento controle tus emociones.",a:"Pema Chödrön"},it:{q:"La pace interiore inizia nel momento in cui scegli di non permettere a un'altra persona o evento di controllare le tue emozioni.",a:"Pema Chödrön"},de:{q:"Innerer Frieden beginnt in dem Moment, in dem du wählst, dir nichts gefallen zu lassen.",a:"Pema Chödrön"},pt:{q:"A paz interior começa no momento em que você escolhe não permitir que outra pessoa ou evento controle suas emoções.",a:"Pema Chödrön"}}},
-  {id:196,cat:"zen",tr:{fr:{q:"Le bonheur est dans la simplicité.",a:"Leo Tolstoï"},en:{q:"Happiness is in the simple things.",a:"Leo Tolstoï"},es:{q:"La felicidad está en la sencillez.",a:"Leo Tolstoï"},it:{q:"La felicità è nella semplicità.",a:"Leo Tolstoï"},de:{q:"Liebe ist die stärkste Kraft, die die Welt besitzt.",a:"Leo Tolstoi"},pt:{q:"A felicidade está na simplicidade.",a:"Leo Tolstoï"}}},
-  {id:197,cat:"zen",tr:{fr:{q:"Ce qui a été, sera encore. Ce qui s'est fait, se refera.",a:"L'Ecclésiaste"},en:{q:"What has been will be again, what has been done will be done again.",a:"L'Ecclésiaste"},es:{q:"Lo que fue, volverá a ser. Lo que se hizo, se volverá a hacer.",a:"L'Ecclésiaste"},it:{q:"Ciò che è stato, sarà ancora. Ciò che è stato fatto, sarà rifatto.",a:"L'Ecclésiaste"},de:{q:"Handle immer so, dass die Maxime deines Handelns allgemeines Gesetz werden könnte.",a:"L'Ecclésiaste"},pt:{q:"O que foi, será novamente. O que foi feito, se fará de novo.",a:"L'Ecclésiaste"}}},
+  {id:196,cat:"zen",tr:{fr:{q:"Le bonheur est dans la simplicité.",a:"Leo Tolstoï"},en:{q:"Happiness is in the simple things.",a:"Leo Tolstoï"},es:{q:"La felicidad está en la sencillez.",a:"Leo Tolstoï"},it:{q:"La felicità è nella semplicità.",a:"Leo Tolstoï"},de:{q:"Glück liegt in der Einfachheit.",a:"Leo Tolstoi"},pt:{q:"A felicidade está na simplicidade.",a:"Leo Tolstoï"}}},
+  {id:197,cat:"zen",tr:{fr:{q:"Ce qui a été, sera encore. Ce qui s'est fait, se refera.",a:"L'Ecclésiaste"},en:{q:"What has been will be again, what has been done will be done again.",a:"L'Ecclésiaste"},es:{q:"Lo que fue, volverá a ser. Lo que se hizo, se volverá a hacer.",a:"L'Ecclésiaste"},it:{q:"Ciò che è stato, sarà ancora. Ciò che è stato fatto, sarà rifatto.",a:"L'Ecclésiaste"},de:{q:"Was gewesen ist, wird wieder sein. Was getan wurde, wird wieder getan werden.",a:"L'Ecclésiaste"},pt:{q:"O que foi, será novamente. O que foi feito, se fará de novo.",a:"L'Ecclésiaste"}}},
   {id:198,cat:"zen",tr:{fr:{q:"L'amour est la force la plus forte que le monde possède.",a:"Gandhi"},en:{q:"Love is the greatest force the world possesses.",a:"Gandhi"},es:{q:"El amor es la fuerza más poderosa que posee el mundo.",a:"Gandhi"},it:{q:"L'amore è la forza più forte che il mondo possiede.",a:"Gandhi"},de:{q:"Liebe ist die stärkste Kraft, die die Welt kennt.",a:"Gandhi"},pt:{q:"O amor é a força mais poderosa que o mundo possui.",a:"Gandhi"}}},
-  {id:199,cat:"zen",tr:{fr:{q:"Agis toujours comme si la totalité de tes actions allait devenir une loi universelle.",a:"Emmanuel Kant"},en:{q:"Act only according to that maxim whereby you can at the same time will that it should become a universal law.",a:"Emmanuel Kant"},es:{q:"Actúa siempre como si la totalidad de tus acciones fuera a convertirse en ley universal.",a:"Emmanuel Kant"},it:{q:"Agisci sempre come se la totalità delle tue azioni diventasse una legge universale.",a:"Emmanuel Kant"},de:{q:"Wenn du morgens aufwachst, denke an das kostbare Privileg, lebendig zu sein.",a:"Emmanuel Kant"},pt:{q:"Aja sempre como se a totalidade de suas ações fosse tornar-se uma lei universal.",a:"Emmanuel Kant"}}},
+  {id:199,cat:"zen",tr:{fr:{q:"Agis toujours comme si la totalité de tes actions allait devenir une loi universelle.",a:"Emmanuel Kant"},en:{q:"Act only according to that maxim whereby you can at the same time will that it should become a universal law.",a:"Emmanuel Kant"},es:{q:"Actúa siempre como si la totalidad de tus acciones fuera a convertirse en ley universal.",a:"Emmanuel Kant"},it:{q:"Agisci sempre come se la totalità delle tue azioni diventasse una legge universale.",a:"Emmanuel Kant"},de:{q:"Handle immer so, dass die Maxime deines Handelns allgemeines Gesetz werden könnte.",a:"Emmanuel Kant"},pt:{q:"Aja sempre como se a totalidade de suas ações fosse tornar-se uma lei universal.",a:"Emmanuel Kant"}}},
   {id:201,cat:"zen",tr:{fr:{q:"Lorsque vous vous réveillez le matin, réfléchissez à la précieuse opportunité d'être en vie.",a:"Marc Aurèle"},en:{q:"When you wake up in the morning, think of what a precious privilege it is to be alive.",a:"Marcus Aurelius"},es:{q:"Cuando te despiertas por la mañana, piensa en la preciosa oportunidad de estar vivo.",a:"Marco Aurelio"},it:{q:"Quando ti svegli al mattino, rifletti sulla preziosa opportunità di essere in vita.",a:"Marco Aurelio"},de:{q:"Wenn du am Morgen aufwachst, denke daran, was für ein wertvolles Privileg es ist, am Leben zu sein.",a:"Marc Aurel"},pt:{q:"Quando você acorda pela manhã, pense na preciosa oportunidade de estar vivo.",a:"Marco Aurélio"}}},
   {id:202,cat:"zen",tr:{fr:{q:"Le sage agit sans effort et enseigne sans paroles.",a:"Lao Tseu"},en:{q:"The wise man acts without effort and teaches without words.",a:"Lao Tzu"},es:{q:"El sabio actúa sin esfuerzo y enseña sin palabras.",a:"Lao Tzu"},it:{q:"Il saggio agisce senza sforzo e insegna senza parole.",a:"Laozi"},de:{q:"Der Weise handelt ohne Anstrengung und lehrt ohne Worte.",a:"Laozi"},pt:{q:"O sábio age sem esforço e ensina sem palavras.",a:"Laozi"}}},
   {id:203,cat:"zen",tr:{fr:{q:"Le vrai bonheur est de vivre dans une sorte de liberté intérieure.",a:"Simone de Beauvoir"},en:{q:"True happiness is to live in a kind of inner freedom.",a:"Simone de Beauvoir"},es:{q:"La verdadera felicidad es vivir en una especie de libertad interior.",a:"Simone de Beauvoir"},it:{q:"La vera felicità è vivere in una sorta di libertà interiore.",a:"Simone de Beauvoir"},de:{q:"Wahres Glück ist, in einer Art innerer Freiheit zu leben.",a:"Simone de Beauvoir"},pt:{q:"A verdadeira felicidade é viver em uma espécie de liberdade interior.",a:"Simone de Beauvoir"}}},
   {id:204,cat:"zen",tr:{fr:{q:"L'âme qui voit la beauté peut parfois marcher seule.",a:"Johann Wolfgang von Goethe"},en:{q:"The soul that sees beauty may sometimes walk alone.",a:"Johann Wolfgang von Goethe"},es:{q:"El alma que ve la belleza puede caminar sola a veces.",a:"Johann Wolfgang von Goethe"},it:{q:"L'anima che vede la bellezza può a volte camminare da sola.",a:"Johann Wolfgang von Goethe"},de:{q:"Die Seele, die Schönheit sieht, kann manchmal allein gehen.",a:"Johann Wolfgang von Goethe"},pt:{q:"A alma que vê a beleza às vezes pode caminhar sozinha.",a:"Johann Wolfgang von Goethe"}}},
-  {id:205,cat:"zen",tr:{fr:{q:"La tranquillité est le fondement de toutes choses.",a:"Lao Tseu"},en:{q:"Tranquility is the foundation of all things.",a:"Lao Tzu"},es:{q:"La tranquilidad es el fundamento de todas las cosas.",a:"Lao Tzu"},it:{q:"La tranquillità è il fondamento di tutte le cose.",a:"Laozi"},de:{q:"Selbst die längste Reise beginnt mit einem ersten Schritt.",a:"Laozi"},pt:{q:"A tranquilidade é o fundamento de todas as coisas.",a:"Laozi"}}},
+  {id:205,cat:"zen",tr:{fr:{q:"La tranquillité est le fondement de toutes choses.",a:"Lao Tseu"},en:{q:"Tranquility is the foundation of all things.",a:"Lao Tzu"},es:{q:"La tranquilidad es el fundamento de todas las cosas.",a:"Lao Tzu"},it:{q:"La tranquillità è il fondamento di tutte le cose.",a:"Laozi"},de:{q:"Die Stille ist das Fundament aller Dinge.",a:"Laozi"},pt:{q:"A tranquilidade é o fundamento de todas as coisas.",a:"Laozi"}}},
   {id:206,cat:"zen",tr:{fr:{q:"Accordez-vous à la puissance de la nature, vous ne serez jamais seul.",a:"Ralph Waldo Emerson"},en:{q:"Tune in to the power of nature and you will never be alone.",a:"Ralph Waldo Emerson"},es:{q:"Sintonízate con el poder de la naturaleza, nunca estarás solo.",a:"Ralph Waldo Emerson"},it:{q:"Sintonizzati con la potenza della natura, non sarai mai solo.",a:"Ralph Waldo Emerson"},de:{q:"Stimme dich auf die Kraft der Natur ein, du wirst nie wieder allein sein.",a:"Ralph Waldo Emerson"},pt:{q:"Sintonize-se com o poder da natureza e nunca estará sozinho.",a:"Ralph Waldo Emerson"}}},
   {id:207,cat:"zen",tr:{fr:{q:"Même le plus long voyage commence par un premier pas.",a:"Lao Tseu"},en:{q:"Even the longest journey begins with the first step.",a:"Lao Tzu"},es:{q:"Incluso el viaje más largo comienza con un primer paso.",a:"Lao Tzu"},it:{q:"Anche il viaggio più lungo inizia con un primo passo.",a:"Laozi"},de:{q:"Sogar die längste Reise beginnt mit dem ersten Schritt.",a:"Laozi"},pt:{q:"Mesmo a jornada mais longa começa com o primeiro passo.",a:"Laozi"}}},
   {id:208,cat:"zen",tr:{fr:{q:"Là où l'attention va, l'énergie coule.",a:"James Redfield"},en:{q:"Where attention goes, energy flows.",a:"James Redfield"},es:{q:"Donde va la atención, fluye la energía.",a:"James Redfield"},it:{q:"Dove va l'attenzione, scorre l'energia.",a:"James Redfield"},de:{q:"Wenn du in Gleichmut ruhst, kannst du weiter gehen.",a:"James Redfield"},pt:{q:"Onde vai a atenção, flui a energia.",a:"James Redfield"}}},
@@ -1378,10 +1483,10 @@ var DB = [
   {id:266,cat:"moti",tr:{fr:{q:"Ne te limite pas. De nombreuses personnes se limitent à ce qu'elles pensent pouvoir faire.",a:"Mary Kay Ash"},en:{q:"Don't limit yourself. Many people limit themselves to what they think they can do.",a:"Mary Kay Ash"},es:{q:"No te limites. Muchas personas se limitan a lo que creen que pueden hacer.",a:"Mary Kay Ash"},it:{q:"Non limitarti. Molte persone si limitano a ciò che pensano di poter fare.",a:"Mary Kay Ash"},de:{q:"Die Art, wie du mit dir selbst redest, bestimmt, wie du mit anderen redest.",a:"Mary Kay Ash"},pt:{q:"Não se limite. Muitas pessoas se limitam ao que pensam que podem fazer.",a:"Mary Kay Ash"}}},
   {id:267,cat:"moti",tr:{fr:{q:"Nous devons accepter la déception finie, mais ne jamais perdre l'espoir infini.",a:"Martin Luther King Jr."},en:{q:"We must accept finite disappointment, but never lose infinite hope.",a:"Martin Luther King Jr."},es:{q:"Debemos aceptar la decepción finita, pero nunca perder la esperanza infinita.",a:"Martin Luther King Jr."},it:{q:"Dobbiamo accettare la delusione finita, ma non perdere mai la speranza infinita.",a:"Martin Luther King Jr."},de:{q:"Jedes Problem, dem du begegnest, lässt dich wachsen.",a:"Martin Luther King Jr."},pt:{q:"Devemos aceitar a decepção finita, mas nunca perder a esperança infinita.",a:"Martin Luther King Jr."}}},
   {id:268,cat:"moti",tr:{fr:{q:"Le talent gagne les jeux, mais le travail d'équipe remporte les championnats.",a:"Michael Jordan"},en:{q:"Talent wins games, but teamwork and intelligence win championships.",a:"Michael Jordan"},es:{q:"El talento gana partidos, pero el trabajo en equipo gana campeonatos.",a:"Michael Jordan"},it:{q:"Il talento vince le partite, ma il lavoro di squadra vince i campionati.",a:"Michael Jordan"},de:{q:"Wovon du mit Leidenschaft sprichst, wird andere erreichen.",a:"Michael Jordan"},pt:{q:"O talento vence jogos, mas o trabalho em equipe ganha campeonatos.",a:"Michael Jordan"}}},
-  {id:269,cat:"moti",tr:{fr:{q:"La façon dont vous parlez à vous-même détermine la façon dont vous vivez votre vie.",a:"Tony Robbins"},en:{q:"The way we communicate with others and with ourselves ultimately determines the quality of our lives.",a:"Tony Robbins"},es:{q:"La manera en que te hablas a ti mismo determina cómo vives tu vida.",a:"Tony Robbins"},it:{q:"Il modo in cui parli a te stesso determina il modo in cui vivi la tua vita.",a:"Tony Robbins"},de:{q:"Wenn dir dein Leben nicht gefällt, ändere es.",a:"Tony Robbins"},pt:{q:"A forma como você fala com você mesmo determina a forma como você vive sua vida.",a:"Tony Robbins"}}},
+  {id:269,cat:"moti",tr:{fr:{q:"La façon dont vous parlez à vous-même détermine la façon dont vous vivez votre vie.",a:"Tony Robbins"},en:{q:"The way we communicate with others and with ourselves ultimately determines the quality of our lives.",a:"Tony Robbins"},es:{q:"La manera en que te hablas a ti mismo determina cómo vives tu vida.",a:"Tony Robbins"},it:{q:"Il modo in cui parli a te stesso determina il modo in cui vivi la tua vita.",a:"Tony Robbins"},de:{q:"Die Art, wie du mit dir selbst sprichst, bestimmt, wie du mit anderen umgehst.",a:"Tony Robbins"},pt:{q:"A forma como você fala com você mesmo determina a forma como você vive sua vida.",a:"Tony Robbins"}}},
   {id:270,cat:"moti",tr:{fr:{q:"Chaque problème que vous rencontrez vous fait progresser.",a:"W. Clement Stone"},en:{q:"Every problem has in it the seeds of its own solution.",a:"W. Clement Stone"},es:{q:"Cada problema que encuentras te hace avanzar.",a:"W. Clement Stone"},it:{q:"Ogni problema che incontri ti fa progredire.",a:"W. Clement Stone"},de:{q:"Du bist stärker als du denkst.",a:"W. Clement Stone"},pt:{q:"Cada problema que você enfrenta faz você progredir.",a:"W. Clement Stone"}}},
   {id:271,cat:"moti",tr:{fr:{q:"Ce dont vous parlez avec passion atteindra les autres.",a:"Jim Rohn"},en:{q:"What you talk about passionately will reach others.",a:"Jim Rohn"},es:{q:"Lo que dices con pasión llegará a los demás.",a:"Jim Rohn"},it:{q:"Ciò di cui parli con passione raggiungerà gli altri.",a:"Jim Rohn"},de:{q:"Erfolg liegt nicht in dem, was du hast, sondern in dem, was du bist.",a:"Jim Rohn"},pt:{q:"O que você fala com paixão atingirá os outros.",a:"Jim Rohn"}}},
-  {id:272,cat:"moti",tr:{fr:{q:"Si vous n'aimez pas votre vie, changez-la.",a:"Jim Rohn"},en:{q:"If you don't like how things are, change it! You're not a tree.",a:"Jim Rohn"},es:{q:"Si no te gusta tu vida, cámbiala.",a:"Jim Rohn"},it:{q:"Se non ti piace la tua vita, cambiala.",a:"Jim Rohn"},de:{q:"Wir erinnern uns nicht an Tage, wir erinnern uns an Momente.",a:"Jim Rohn"},pt:{q:"Se não gosta de sua vida, mude-a.",a:"Jim Rohn"}}},
+  {id:272,cat:"moti",tr:{fr:{q:"Si vous n'aimez pas votre vie, changez-la.",a:"Jim Rohn"},en:{q:"If you don't like how things are, change it! You're not a tree.",a:"Jim Rohn"},es:{q:"Si no te gusta tu vida, cámbiala.",a:"Jim Rohn"},it:{q:"Se non ti piace la tua vita, cambiala.",a:"Jim Rohn"},de:{q:"Wenn dir dein Leben nicht gefällt, ändere es.",a:"Jim Rohn"},pt:{q:"Se não gosta de sua vida, mude-a.",a:"Jim Rohn"}}},
   {id:273,cat:"moti",tr:{fr:{q:"Vous êtes plus fort que vous ne le pensez.",a:"Christopher Robin (A.A. Milne)"},en:{q:"You are braver than you believe, stronger than you seem, and smarter than you think.",a:"Christopher Robin (A.A. Milne)"},es:{q:"Eres más fuerte de lo que crees.",a:"Christopher Robin (A.A. Milne)"},it:{q:"Sei più forte di quanto pensi.",a:"Christopher Robin (A.A. Milne)"},de:{q:"Du bist mutiger, als du glaubst, stärker, als du scheinst, und klüger, als du denkst.",a:"Christopher Robin (A.A. Milne)"},pt:{q:"Você é mais forte do que pensa.",a:"Christopher Robin (A.A. Milne)"}}},
   {id:274,cat:"moti",tr:{fr:{q:"Le succès n'est pas dans ce que vous avez, mais dans qui vous êtes.",a:"Bo Bennett"},en:{q:"Success is not in what you have, but in who you are.",a:"Bo Bennett"},es:{q:"El éxito no está en lo que tienes, sino en quién eres.",a:"Bo Bennett"},it:{q:"Il successo non è in ciò che hai, ma in chi sei.",a:"Bo Bennett"},de:{q:"Ein Traum wird nicht durch Magie Wirklichkeit. Es braucht Schweiß, Entschlossenheit und harte Arbeit.",a:"Bo Bennett"},pt:{q:"O sucesso não está no que você tem, mas em quem você é.",a:"Bo Bennett"}}},
   {id:275,cat:"moti",tr:{fr:{q:"Nous ne nous souvenons pas des jours, nous nous souvenons des moments.",a:"Cesare Pavese"},en:{q:"We do not remember days; we remember moments.",a:"Cesare Pavese"},es:{q:"No recordamos los días, recordamos los momentos.",a:"Cesare Pavese"},it:{q:"Non ricordiamo i giorni, ricordiamo i momenti.",a:"Cesare Pavese"},de:{q:"Wir erinnern uns nicht an Tage, wir erinnern uns an Momente.",a:"Cesare Pavese"},pt:{q:"Não nos lembramos dos dias, nos lembramos dos momentos.",a:"Cesare Pavese"}}},
@@ -1496,10 +1601,10 @@ var DB = [
   {id:386,cat:"amour",tr:{fr:{q:"L'amour est aveugle, mais le mariage lui rend la vue.",a:"Georg Christoph Lichtenberg"},en:{q:"Love is blind, but marriage restores its sight.",a:"Georg Christoph Lichtenberg"},es:{q:"El amor es ciego, pero el matrimonio le devuelve la vista.",a:"Georg Christoph Lichtenberg"},it:{q:"L'amore è cieco, ma il matrimonio gli restituisce la vista.",a:"Georg Christoph Lichtenberg"},de:{q:"Ich liebe dich nicht nur dafür, was du bist, sondern dafür, was ich bin, wenn ich bei dir bin.",a:"Georg Christoph Lichtenberg"},pt:{q:"O amor é cego, mas o casamento lhe devolve a visão.",a:"Georg Christoph Lichtenberg"}}},
   {id:387,cat:"amour",tr:{fr:{q:"Aimer, c'est l'action de se sentir vivant.",a:"Pearl Bailey"},en:{q:"Loving is the act of feeling alive.",a:"Pearl Bailey"},es:{q:"Amar es la acción de sentirse vivo.",a:"Pearl Bailey"},it:{q:"Amare è l'azione di sentirsi vivi.",a:"Pearl Bailey"},de:{q:"Liebe ist das schönste Abenteuer.",a:"Pearl Bailey"},pt:{q:"Amar é a ação de se sentir vivo.",a:"Pearl Bailey"}}},
   {id:388,cat:"amour",tr:{fr:{q:"Là où l'amour règne, il n'y a pas de volonté de pouvoir.",a:"Carl Gustav Jung"},en:{q:"Where love rules, there is no will to power.",a:"Carl Gustav Jung"},es:{q:"Donde reina el amor, no hay voluntad de poder.",a:"Carl Gustav Jung"},it:{q:"Dove regna l'amore, non c'è volontà di potere.",a:"Carl Gustav Jung"},de:{q:"Wir lieben, und das Universum liebt uns zurück.",a:"Carl Gustav Jung"},pt:{q:"Onde o amor reina, não há vontade de poder.",a:"Carl Gustav Jung"}}},
-  {id:389,cat:"amour",tr:{fr:{q:"Je t'aime, non seulement pour ce que tu es, mais pour ce que je suis quand je suis avec toi.",a:"Roy Croft"},en:{q:"I love you not only for what you are, but for what I am when I am with you.",a:"Roy Croft"},es:{q:"Te amo no solo por lo que eres, sino por lo que soy cuando estoy contigo.",a:"Roy Croft"},it:{q:"Ti amo, non solo per quello che sei, ma per quello che sono quando sono con te.",a:"Roy Croft"},de:{q:"Wenn du fühlen kannst, dass du liebst, existierst du.",a:"Roy Croft"},pt:{q:"Eu te amo não apenas pelo que você é, mas pelo que sou quando estou com você.",a:"Roy Croft"}}},
+  {id:389,cat:"amour",tr:{fr:{q:"Je t'aime, non seulement pour ce que tu es, mais pour ce que je suis quand je suis avec toi.",a:"Roy Croft"},en:{q:"I love you not only for what you are, but for what I am when I am with you.",a:"Roy Croft"},es:{q:"Te amo no solo por lo que eres, sino por lo que soy cuando estoy contigo.",a:"Roy Croft"},it:{q:"Ti amo, non solo per quello che sei, ma per quello che sono quando sono con te.",a:"Roy Croft"},de:{q:"Ich liebe dich nicht nur dafür, was du bist, sondern für das, was ich bin, wenn ich bei dir bin.",a:"Roy Croft"},pt:{q:"Eu te amo não apenas pelo que você é, mas pelo que sou quando estou com você.",a:"Roy Croft"}}},
   {id:390,cat:"amour",tr:{fr:{q:"L'amour est la plus belle des aventures.",a:"Simone de Beauvoir"},en:{q:"Love is the most beautiful of adventures.",a:"Simone de Beauvoir"},es:{q:"El amor es la aventura más bella.",a:"Simone de Beauvoir"},it:{q:"L'amore è la più bella delle avventure.",a:"Simone de Beauvoir"},de:{q:"Liebe ist die einzige Sache, die wächst, wenn man sie gibt.",a:"Simone de Beauvoir"},pt:{q:"O amor é a mais bela das aventuras.",a:"Simone de Beauvoir"}}},
   {id:391,cat:"amour",tr:{fr:{q:"Nous aimons, et l'univers nous aime en retour.",a:"Paulo Coelho"},en:{q:"We love, and the universe loves us in return.",a:"Paulo Coelho"},es:{q:"Amamos, y el universo nos ama a su vez.",a:"Paulo Coelho"},it:{q:"Amiamo, e l'universo ci ama a sua volta.",a:"Paulo Coelho"},de:{q:"In der Liebe flieht der Fliehende als Sieger.",a:"Paulo Coelho"},pt:{q:"Amamos, e o universo nos ama de volta.",a:"Paulo Coelho"}}},
-  {id:392,cat:"amour",tr:{fr:{q:"Quand tu peux sentir que tu aimes, tu existes.",a:"Rumi"},en:{q:"When you feel that you love, you exist.",a:"Rumi"},es:{q:"Cuando puedes sentir que amas, existes.",a:"Rumi"},it:{q:"Quando puoi sentire di amare, esisti.",a:"Rumi"},de:{q:"Liebe verändert alles, was sie berührt.",a:"Rumi"},pt:{q:"Quando você sente que ama, existe.",a:"Rumi"}}},
+  {id:392,cat:"amour",tr:{fr:{q:"Quand tu peux sentir que tu aimes, tu existes.",a:"Rumi"},en:{q:"When you feel that you love, you exist.",a:"Rumi"},es:{q:"Cuando puedes sentir que amas, existes.",a:"Rumi"},it:{q:"Quando puoi sentire di amare, esisti.",a:"Rumi"},de:{q:"Wenn du fühlen kannst, dass du liebst, existierst du.",a:"Rumi"},pt:{q:"Quando você sente que ama, existe.",a:"Rumi"}}},
   {id:393,cat:"amour",tr:{fr:{q:"L'amour est l'aile que Dieu a donnée à l'homme pour atteindre le ciel.",a:"Michel-Ange"},en:{q:"Love is the wing God has given man to soar to heaven.",a:"Michelangelo"},es:{q:"El amor es el ala que Dios ha dado al hombre para alcanzar el cielo.",a:"Miguel Ángel"},it:{q:"L'amore è l'ala che Dio ha dato all'uomo per raggiungere il cielo.",a:"Michelangelo"},de:{q:"Die Liebe ist der Flügel, den Gott dem Menschen gegeben hat, um den Himmel zu erreichen.",a:"Michelangelo"},pt:{q:"O amor é a asa que Deus deu ao homem para alcançar o céu.",a:"Michelangelo"}}},
   {id:394,cat:"amour",tr:{fr:{q:"Ce qui est aimé peut être perdu mais l'acte d'aimer dure toujours.",a:"Thornton Wilder"},en:{q:"What is loved can be lost, but the act of loving lasts forever.",a:"Thornton Wilder"},es:{q:"Lo que se ama puede perderse, pero el acto de amar dura siempre.",a:"Thornton Wilder"},it:{q:"Ciò che è amato può essere perso, ma l'atto di amare dura sempre.",a:"Thornton Wilder"},de:{q:"Was geliebt wird, kann verloren gehen, aber der Akt des Liebens bleibt für immer.",a:"Thornton Wilder"},pt:{q:"O que se ama pode ser perdido, mas o ato de amar dura para sempre.",a:"Thornton Wilder"}}},
   {id:395,cat:"amour",tr:{fr:{q:"L'amour est la seule chose qui croît en se donnant.",a:"Antoine de Rivarol"},en:{q:"Love is the only thing that grows by giving.",a:"Antoine de Rivarol"},es:{q:"El amor es la única cosa que crece dándose.",a:"Antoine de Rivarol"},it:{q:"L'amore è l'unica cosa che cresce donandola.",a:"Antoine de Rivarol"},de:{q:"Zuneigung ist die Hälfte der Liebe, und Weisheit ist der Rest.",a:"Antoine de Rivarol"},pt:{q:"O amor é a única coisa que cresce ao ser dado.",a:"Antoine de Rivarol"}}},
@@ -1590,7 +1695,7 @@ var DB = [
   {id:482,cat:"courage",tr:{fr:{q:"La ténacité transforme les rêves en réalité.",a:"Thomas Edison"},en:{q:"Tenacity transforms dreams into reality.",a:"Thomas Edison"},es:{q:"La tenacidad transforma los sueños en realidad.",a:"Thomas Edison"},it:{q:"La tenacia trasforma i sogni in realtà.",a:"Thomas Edison"},de:{q:"Tapferkeit ist es, trotz der Angst voranzugehen.",a:"Thomas Edison"},pt:{q:"A tenacidade transforma os sonhos em realidade.",a:"Thomas Edison"}}},
   {id:483,cat:"courage",tr:{fr:{q:"La résistance est la conscience refusant d'être écrasée.",a:"Paulo Coelho"},en:{q:"Resistance is consciousness refusing to be crushed.",a:"Paulo Coelho"},es:{q:"La resistencia es la conciencia que se niega a ser aplastada.",a:"Paulo Coelho"},it:{q:"La resistenza è la coscienza che si rifiuta di essere schiacciata.",a:"Paulo Coelho"},de:{q:"Niemals einen Traum wegen der Zeit aufgeben, die es dauern wird.",a:"Paulo Coelho"},pt:{q:"A resistência é a consciência se recusando a ser esmagada.",a:"Paulo Coelho"}}},
   {id:484,cat:"courage",tr:{fr:{q:"Il y a des gens qui voient la tempête venir et qui courent s'abriter. D'autres la regardent et construisent des moulins à vent.",a:"William Arthur Ward"},en:{q:"Some people see the storm coming and run for shelter. Others look at it and build windmills.",a:"William Arthur Ward"},es:{q:"Hay personas que ven venir la tormenta y corren a refugiarse. Otras la miran y construyen molinos de viento.",a:"William Arthur Ward"},it:{q:"Ci sono persone che vedono arrivare la tempesta e corrono a ripararsi. Altre la guardano e costruiscono mulini a vento.",a:"William Arthur Ward"},de:{q:"Manche Menschen sehen den Sturm kommen und suchen Schutz. Andere stehen und kämpfen.",a:"William Arthur Ward"},pt:{q:"Há pessoas que veem a tempestade chegar e correm para se abrigar. Outras a observam e constroem moinhos de vento.",a:"William Arthur Ward"}}},
-  {id:485,cat:"courage",tr:{fr:{q:"La véritable bravoure, c'est de faire ce qui est juste même quand c'est difficile.",a:"J.K. Rowling"},en:{q:"True bravery is doing what's right even when it's hard.",a:"J.K. Rowling"},es:{q:"La verdadera valentía es hacer lo correcto aunque sea difícil.",a:"J.K. Rowling"},it:{q:"Il vero coraggio è fare ciò che è giusto anche quando è difficile.",a:"J.K. Rowling"},de:{q:"Jetzt ist nicht die Zeit, an deiner Stärke zu zweifeln.",a:"J.K. Rowling"},pt:{q:"A verdadeira bravura é fazer o que é certo mesmo quando é difícil.",a:"J.K. Rowling"}}},
+  {id:485,cat:"courage",tr:{fr:{q:"La véritable bravoure, c'est de faire ce qui est juste même quand c'est difficile.",a:"J.K. Rowling"},en:{q:"True bravery is doing what's right even when it's hard.",a:"J.K. Rowling"},es:{q:"La verdadera valentía es hacer lo correcto aunque sea difícil.",a:"J.K. Rowling"},it:{q:"Il vero coraggio è fare ciò che è giusto anche quando è difficile.",a:"J.K. Rowling"},de:{q:"Wahre Tapferkeit ist, das Richtige zu tun, auch wenn es schwer ist.",a:"J.K. Rowling"},pt:{q:"A verdadeira bravura é fazer o que é certo mesmo quando é difícil.",a:"J.K. Rowling"}}},
   {id:486,cat:"courage",tr:{fr:{q:"Les hommes courageux naissent dans des vies difficiles.",a:"Abigail Adams"},en:{q:"Courageous men are born in difficult lives.",a:"Abigail Adams"},es:{q:"Los hombres valientes nacen en vidas difíciles.",a:"Abigail Adams"},it:{q:"Gli uomini coraggiosi nascono in vite difficili.",a:"Abigail Adams"},de:{q:"Mutige Männer werden in schwierigen Leben geboren.",a:"Abigail Adams"},pt:{q:"Os homens corajosos nascem em vidas difíceis.",a:"Abigail Adams"}}},
   {id:487,cat:"courage",tr:{fr:{q:"Il faut risquer de décevoir pour avoir une chance de surprendre.",a:"Franklin D. Roosevelt"},en:{q:"You have to risk disappointing to have a chance to surprise.",a:"Franklin D. Roosevelt"},es:{q:"Hay que arriesgarse a decepcionar para tener la oportunidad de sorprender.",a:"Franklin D. Roosevelt"},it:{q:"Bisogna rischiare di deludere per avere la possibilità di sorprendere.",a:"Franklin D. Roosevelt"},de:{q:"Man muss riskieren zu enttäuschen, um eine Chance zu haben zu überraschen.",a:"Franklin D. Roosevelt"},pt:{q:"É preciso arriscar desapontar para ter uma chance de surpreender.",a:"Franklin D. Roosevelt"}}},
   {id:488,cat:"courage",tr:{fr:{q:"La souffrance forge le caractère.",a:"James Lane Allen"},en:{q:"Suffering is the price of character.",a:"James Lane Allen"},es:{q:"El sufrimiento forja el carácter.",a:"James Lane Allen"},it:{q:"La sofferenza forgia il carattere.",a:"James Lane Allen"},de:{q:"Entschlossenheit ist die Tochter des Mutes.",a:"James Lane Allen"},pt:{q:"O sofrimento forja o caráter.",a:"James Lane Allen"}}},
@@ -1666,7 +1771,7 @@ var DB = [
   {id:558,cat:"sante",tr:{fr:{q:"On ne sait pas apprécier la santé qu'à travers la maladie.",a:"Thomas Fuller"},en:{q:"We only appreciate health through illness.",a:"Thomas Fuller"},es:{q:"Solo se aprecia la salud a través de la enfermedad.",a:"Thomas Fuller"},it:{q:"Non si sa apprezzare la salute che attraverso la malattia.",a:"Thomas Fuller"},de:{q:"Seinen Körper zu lieben ist der erste Akt der Gesundheit.",a:"Thomas Fuller"},pt:{q:"Só se aprecia a saúde através da doença.",a:"Thomas Fuller"}}},
   {id:559,cat:"sante",tr:{fr:{q:"Votre corps entend tout ce que votre esprit dit.",a:"Naomi Judd"},en:{q:"Your body hears everything your mind says.",a:"Naomi Judd"},es:{q:"Tu cuerpo escucha todo lo que dice tu mente.",a:"Naomi Judd"},it:{q:"Il tuo corpo sente tutto ciò che la tua mente dice.",a:"Naomi Judd"},de:{q:"Dein Körper hört alles, was dein Geist sagt.",a:"Naomi Judd"},pt:{q:"Seu corpo ouve tudo que sua mente diz.",a:"Naomi Judd"}}},
   {id:560,cat:"sante",tr:{fr:{q:"L'exercice est la meilleure thérapie qui soit.",a:"Steven Blair"},en:{q:"Exercise is the best therapy there is.",a:"Steven Blair"},es:{q:"El ejercicio es la mejor terapia que existe.",a:"Steven Blair"},it:{q:"L'esercizio è la migliore terapia che esista.",a:"Steven Blair"},de:{q:"Urteile nicht über deinen Körper, liebe ihn.",a:"Steven Blair"},pt:{q:"O exercício é a melhor terapia que existe.",a:"Steven Blair"}}},
-  {id:561,cat:"sante",tr:{fr:{q:"Rire est la meilleure des médecines.",a:"Proverbe"},en:{q:"Laughter is the best medicine.",a:"Proverb"},es:{q:"Reír es la mejor de las medicinas.",a:"Proverbio"},it:{q:"Ridere è la migliore delle medicine.",a:"Proverbio"},de:{q:"Wahre körperliche Fitness beginnt im Kopf.",a:"Sprichwort"},pt:{q:"Rir é o melhor dos remédios.",a:"Provérbio"}}},
+  {id:561,cat:"sante",tr:{fr:{q:"Rire est la meilleure des médecines.",a:"Proverbe"},en:{q:"Laughter is the best medicine.",a:"Proverb"},es:{q:"Reír es la mejor de las medicinas.",a:"Proverbio"},it:{q:"Ridere è la migliore delle medicine.",a:"Proverbio"},de:{q:"Lachen ist die beste Medizin.",a:"Sprichwort"},pt:{q:"Rir é o melhor dos remédios.",a:"Provérbio"}}},
   {id:562,cat:"sante",tr:{fr:{q:"La nature guérit, le médecin assiste.",a:"Hippocrate"},en:{q:"Nature heals, the doctor assists.",a:"Hippocrates"},es:{q:"La naturaleza cura, el médico asiste.",a:"Hipócrates"},it:{q:"La natura guarisce, il medico assiste.",a:"Ippocrate"},de:{q:"Die Natur heilt, der Arzt hilft.",a:"Hippokrates"},pt:{q:"A natureza cura, o médico assiste.",a:"Hipócrates"}}},
   {id:563,cat:"sante",tr:{fr:{q:"Un esprit sain vit dans un corps actif.",a:"Aristote"},en:{q:"A healthy mind lives in an active body.",a:"Aristotle"},es:{q:"Una mente sana vive en un cuerpo activo.",a:"Aristóteles"},it:{q:"Una mente sana vive in un corpo attivo.",a:"Aristotele"},de:{q:"Ein gesunder Geist lebt in einem aktiven Körper.",a:"Aristoteles"},pt:{q:"Uma mente sã vive em um corpo ativo.",a:"Aristóteles"}}},
   {id:564,cat:"sante",tr:{fr:{q:"Chaque jour, buvez votre eau, marchez un peu, et souriez davantage.",a:"Dalai Lama"},en:{q:"Each day, drink your water, walk a little, and smile more.",a:"Dalai Lama"},es:{q:"Cada día, bebe tu agua, camina un poco y sonríe más.",a:"Dalái Lama"},it:{q:"Ogni giorno, bevi la tua acqua, cammina un po' e sorridi di più.",a:"Dalai Lama"},de:{q:"Trinke täglich dein Wasser, gehe ein wenig spazieren und lächle mehr.",a:"Dalai Lama"},pt:{q:"Cada dia, beba sua água, caminhe um pouco e sorria mais.",a:"Dalai Lama"}}},
@@ -1957,12 +2062,12 @@ var DB = [
   {id:852,cat:"moti",tr:{fr:{q:"Vous ne pouvez pas retourner en arrière, alors autant avancer.",a:"C.S. Lewis"},en:{q:"You can't go back, so you might as well move forward.",a:"C.S. Lewis"},es:{q:"No puedes volver atrás, así que más vale seguir adelante.",a:"C.S. Lewis"},it:{q:"Non puoi tornare indietro, quindi tanto vale andare avanti.",a:"C.S. Lewis"},de:{q:"Du kannst nicht zurückgehen, also kannst du genauso gut vorwärtsgehen.",a:"C.S. Lewis"},pt:{q:"Você não pode voltar atrás, então é melhor avançar.",a:"C.S. Lewis"}}},
   {id:853,cat:"moti",tr:{fr:{q:"Permettez-vous d'être un débutant. Aucun expert n'a débuté en expert.",a:"Helen Hayes"},en:{q:"Allow yourself to be a beginner. No expert started as an expert.",a:"Helen Hayes"},es:{q:"Permítete ser un principiante. Ningún experto comenzó siendo experto.",a:"Helen Hayes"},it:{q:"Permettiti di essere un principiante. Nessun esperto ha iniziato come esperto.",a:"Helen Hayes"},de:{q:"Erlaube dir, ein Anfänger zu sein. Kein Experte hat als Experte begonnen.",a:"Helen Hayes"},pt:{q:"Permita-se ser iniciante. Nenhum especialista começou como especialista.",a:"Helen Hayes"}}},
   {id:854,cat:"moti",tr:{fr:{q:"Ce n'est pas ce que vous avez à votre disposition, c'est ce que vous avez dans le cœur.",a:"Theodore Roosevelt"},en:{q:"It is not the resources you have available, it's what you have in your heart.",a:"Theodore Roosevelt"},es:{q:"No es lo que tienes a tu disposición, sino lo que tienes en el corazón.",a:"Theodore Roosevelt"},it:{q:"Non è ciò che hai a disposizione, è ciò che hai nel cuore.",a:"Theodore Roosevelt"},de:{q:"Es sind nicht die Mittel, die dir zur Verfügung stehen; es ist das, was du im Herzen trägst.",a:"Theodore Roosevelt"},pt:{q:"Não é o que você tem à disposição, é o que você tem no coração.",a:"Theodore Roosevelt"}}},
-  {id:855,cat:"moti",tr:{fr:{q:"Ce que vous obtenez en atteignant vos objectifs n'est pas aussi important que ce que vous devenez.",a:"Henry David Thoreau"},en:{q:"What you get by achieving your goals is not as important as what you become.",a:"Henry David Thoreau"},es:{q:"Lo que obtienes al alcanzar tus metas no es tan importante como en lo que te conviertes.",a:"Henry David Thoreau"},it:{q:"Ciò che ottieni nel raggiungere i tuoi obiettivi non è così importante quanto ciò che diventi.",a:"Henry David Thoreau"},de:{q:"Beharrlichkeit ist die Königin der Tugenden für denjenigen, der Erfolg haben möchte.",a:"Henry David Thoreau"},pt:{q:"O que você obtém ao alcançar seus objetivos não é tão importante quanto no que você se torna.",a:"Henry David Thoreau"}}},
-  {id:856,cat:"moti",tr:{fr:{q:"L'effort est l'un des médicaments les plus puissants pour lutter contre la douleur.",a:"Henry Ford"},en:{q:"Effort is one of the most powerful medicines against pain.",a:"Henry Ford"},es:{q:"El esfuerzo es uno de los medicamentos más poderosos para combatir el dolor.",a:"Henry Ford"},it:{q:"Lo sforzo è uno dei farmaci più potenti contro il dolore.",a:"Henry Ford"},de:{q:"Vergleiche dich niemals mit anderen. Du bist einzigartig.",a:"Henry Ford"},pt:{q:"O esforço é um dos remédios mais poderosos para combater a dor.",a:"Henry Ford"}}},
-  {id:857,cat:"moti",tr:{fr:{q:"Rien ne peut arrêter l'homme avec la bonne attitude mentale.",a:"Thomas Jefferson"},en:{q:"Nothing can stop the man with the right mental attitude.",a:"Thomas Jefferson"},es:{q:"Nada puede detener al hombre con la actitud mental correcta.",a:"Thomas Jefferson"},it:{q:"Nulla può fermare l'uomo con il giusto atteggiamento mentale.",a:"Thomas Jefferson"},de:{q:"Dein Leben kann sich in einem Moment ändern, wenn du die richtige Entscheidung triffst.",a:"Thomas Jefferson"},pt:{q:"Nada pode deter o homem com a atitude mental certa.",a:"Thomas Jefferson"}}},
+  {id:855,cat:"moti",tr:{fr:{q:"Ce que vous obtenez en atteignant vos objectifs n'est pas aussi important que ce que vous devenez.",a:"Henry David Thoreau"},en:{q:"What you get by achieving your goals is not as important as what you become.",a:"Henry David Thoreau"},es:{q:"Lo que obtienes al alcanzar tus metas no es tan importante como en lo que te conviertes.",a:"Henry David Thoreau"},it:{q:"Ciò che ottieni nel raggiungere i tuoi obiettivi non è così importante quanto ciò che diventi.",a:"Henry David Thoreau"},de:{q:"Was du durch das Erreichen deiner Ziele bekommst, ist nicht so wichtig wie das, was du dabei wirst.",a:"Henry David Thoreau"},pt:{q:"O que você obtém ao alcançar seus objetivos não é tão importante quanto no que você se torna.",a:"Henry David Thoreau"}}},
+  {id:856,cat:"moti",tr:{fr:{q:"L'effort est l'un des médicaments les plus puissants pour lutter contre la douleur.",a:"Henry Ford"},en:{q:"Effort is one of the most powerful medicines against pain.",a:"Henry Ford"},es:{q:"El esfuerzo es uno de los medicamentos más poderosos para combatir el dolor.",a:"Henry Ford"},it:{q:"Lo sforzo è uno dei farmaci più potenti contro il dolore.",a:"Henry Ford"},de:{q:"Anstrengung ist eines der wirksamsten Mittel gegen den Schmerz.",a:"Henry Ford"},pt:{q:"O esforço é um dos remédios mais poderosos para combater a dor.",a:"Henry Ford"}}},
+  {id:857,cat:"moti",tr:{fr:{q:"Rien ne peut arrêter l'homme avec la bonne attitude mentale.",a:"Thomas Jefferson"},en:{q:"Nothing can stop the man with the right mental attitude.",a:"Thomas Jefferson"},es:{q:"Nada puede detener al hombre con la actitud mental correcta.",a:"Thomas Jefferson"},it:{q:"Nulla può fermare l'uomo con il giusto atteggiamento mentale.",a:"Thomas Jefferson"},de:{q:"Nichts kann den Menschen mit der richtigen Einstellung aufhalten.",a:"Thomas Jefferson"},pt:{q:"Nada pode deter o homem com a atitude mental certa.",a:"Thomas Jefferson"}}},
   {id:858,cat:"moti",tr:{fr:{q:"Chaque jour est une opportunité d'être meilleur qu'hier.",a:"Winston Churchill"},en:{q:"Every day is an opportunity to be better than yesterday.",a:"Winston Churchill"},es:{q:"Cada día es una oportunidad de ser mejor que ayer.",a:"Winston Churchill"},it:{q:"Ogni giorno è un'opportunità per essere migliore di ieri.",a:"Winston Churchill"},de:{q:"Jeder Tag ist eine Gelegenheit, besser als gestern zu sein.",a:"Winston Churchill"},pt:{q:"Cada dia é uma oportunidade de ser melhor que ontem.",a:"Winston Churchill"}}},
   {id:859,cat:"moti",tr:{fr:{q:"Décidez d'agir et le reste suivra.",a:"Walt Disney"},en:{q:"Decide to act and the rest will follow.",a:"Walt Disney"},es:{q:"Decide actuar y el resto vendrá.",a:"Walt Disney"},it:{q:"Decidi di agire e il resto seguirà.",a:"Walt Disney"},de:{q:"Entscheide dich zu handeln, und der Rest wird folgen.",a:"Walt Disney"},pt:{q:"Decida agir e o resto virá.",a:"Walt Disney"}}},
-  {id:860,cat:"moti",tr:{fr:{q:"Vous serez ce que vous rêvez.",a:"James Allen"},en:{q:"You will be what you dream.",a:"James Allen"},es:{q:"Serás lo que sueñas.",a:"James Allen"},it:{q:"Sarai ciò che sogni.",a:"James Allen"},de:{q:"Es ist nie zu spät, das zu werden, was du hättest sein können.",a:"James Allen"},pt:{q:"Você será o que sonhar.",a:"James Allen"}}},
+  {id:860,cat:"moti",tr:{fr:{q:"Vous serez ce que vous rêvez.",a:"James Allen"},en:{q:"You will be what you dream.",a:"James Allen"},es:{q:"Serás lo que sueñas.",a:"James Allen"},it:{q:"Sarai ciò che sogni.",a:"James Allen"},de:{q:"Du wirst sein, was du träumst.",a:"James Allen"},pt:{q:"Você será o que sonhar.",a:"James Allen"}}},
   {id:861,cat:"moti",tr:{fr:{q:"Battez-vous pour ce qui vous tient à cœur.",a:"Bernard Meltzer"},en:{q:"Fight for what is close to your heart.",a:"Bernard Meltzer"},es:{q:"Lucha por lo que te importa.",a:"Bernard Meltzer"},it:{q:"Combatti per ciò che ti sta a cuore.",a:"Bernard Meltzer"},de:{q:"Kämpfe für das, was dir am Herzen liegt.",a:"Bernard Meltzer"},pt:{q:"Lute pelo que lhe importa.",a:"Bernard Meltzer"}}},
   {id:862,cat:"moti",tr:{fr:{q:"L'excellence est une habitude qu'il faut entretenir quotidiennement.",a:"Aristote"},en:{q:"Excellence is a habit that must be maintained daily.",a:"Aristotle"},es:{q:"La excelencia es un hábito que hay que cultivar diariamente.",a:"Aristóteles"},it:{q:"L'eccellenza è un'abitudine da coltivare quotidianamente.",a:"Aristotele"},de:{q:"Exzellenz ist eine Gewohnheit, die täglich gepflegt werden muss.",a:"Aristoteles"},pt:{q:"A excelência é um hábito que precisa ser mantido diariamente.",a:"Aristóteles"}}},
   {id:863,cat:"moti",tr:{fr:{q:"Vous avez ce qu'il faut pour réussir.",a:"Theodore Roosevelt"},en:{q:"You have what it takes to succeed.",a:"Theodore Roosevelt"},es:{q:"Tienes lo que se necesita para triunfar.",a:"Theodore Roosevelt"},it:{q:"Hai ciò che serve per riuscire.",a:"Theodore Roosevelt"},de:{q:"Du hast das Zeug zum Erfolg.",a:"Theodore Roosevelt"},pt:{q:"Você tem o que é preciso para ter sucesso.",a:"Theodore Roosevelt"}}},
@@ -2001,7 +2106,7 @@ var DB = [
   {id:897,cat:"amour",tr:{fr:{q:"Ton sourire est ma lumière du matin.",a:"Paulo Coelho"},en:{q:"Your smile is my morning light.",a:"Paulo Coelho"},es:{q:"Tu sonrisa es mi luz de la mañana.",a:"Paulo Coelho"},it:{q:"Il tuo sorriso è la mia luce del mattino.",a:"Paulo Coelho"},de:{q:"Dein Lächeln ist mein Morgenlicht.",a:"Paulo Coelho"},pt:{q:"Teu sorriso é minha luz da manhã.",a:"Paulo Coelho"}}},
   {id:898,cat:"amour",tr:{fr:{q:"Être aimé, c'est sentir qu'on existe pour quelqu'un.",a:"Simone de Beauvoir"},en:{q:"Being loved is feeling that one exists for someone.",a:"Simone de Beauvoir"},es:{q:"Ser amado es sentir que se existe para alguien.",a:"Simone de Beauvoir"},it:{q:"Essere amati è sentire che si esiste per qualcuno.",a:"Simone de Beauvoir"},de:{q:"Geliebt zu werden bedeutet zu spüren, dass man für jemanden existiert.",a:"Simone de Beauvoir"},pt:{q:"Ser amado é sentir que existe para alguém.",a:"Simone de Beauvoir"}}},
   {id:899,cat:"amour",tr:{fr:{q:"L'amour grandit avec le temps et la confiance.",a:"Gary Chapman"},en:{q:"Love grows with time and trust.",a:"Gary Chapman"},es:{q:"El amor crece con el tiempo y la confianza.",a:"Gary Chapman"},it:{q:"L'amore cresce con il tempo e la fiducia.",a:"Gary Chapman"},de:{q:"Liebe wächst mit der Zeit und dem Vertrauen.",a:"Gary Chapman"},pt:{q:"O amor cresce com o tempo e a confiança.",a:"Gary Chapman"}}},
-  {id:900,cat:"courage",tr:{fr:{q:"Il faut parfois brûler ses vaisseaux pour avancer.",a:"Jules César"},en:{q:"Sometimes you have to burn your ships to advance.",a:"Jules César"},es:{q:"Hay que quemar las naves a veces para avanzar.",a:"Jules César"},it:{q:"A volte bisogna bruciare le navi per andare avanti.",a:"Jules César"},de:{q:"Der Akt des Mutes beginnt mit einer Entscheidung.",a:"Jules César"},pt:{q:"Às vezes é preciso queimar os navios para avançar.",a:"Jules César"}}},
+  {id:900,cat:"courage",tr:{fr:{q:"Il faut parfois brûler ses vaisseaux pour avancer.",a:"Jules César"},en:{q:"Sometimes you have to burn your ships to advance.",a:"Jules César"},es:{q:"Hay que quemar las naves a veces para avanzar.",a:"Jules César"},it:{q:"A volte bisogna bruciare le navi per andare avanti.",a:"Jules César"},de:{q:"Manchmal muss man die Brücken hinter sich verbrennen, um voranzukommen.",a:"Jules César"},pt:{q:"Às vezes é preciso queimar os navios para avançar.",a:"Jules César"}}},
   {id:901,cat:"courage",tr:{fr:{q:"Le vrai courage, c'est d'aller vers l'inconnu.",a:"Roald Dahl"},en:{q:"True courage is going toward the unknown.",a:"Roald Dahl"},es:{q:"El verdadero coraje es ir hacia lo desconocido.",a:"Roald Dahl"},it:{q:"Il vero coraggio è andare verso l'ignoto.",a:"Roald Dahl"},de:{q:"Nur Mutige finden wahre Freiheit.",a:"Roald Dahl"},pt:{q:"A verdadeira coragem é ir em direção ao desconhecido.",a:"Roald Dahl"}}},
   {id:902,cat:"courage",tr:{fr:{q:"L'intrépidité est la mère de toutes les vertus.",a:"Aristote"},en:{q:"Fearlessness is the mother of all virtues.",a:"Aristotle"},es:{q:"La intrepidez es la madre de todas las virtudes.",a:"Aristóteles"},it:{q:"L'intrepidezza è la madre di tutte le virtù.",a:"Aristotele"},de:{q:"Wage es und die Welt öffnet sich.",a:"Aristoteles"},pt:{q:"A intrepidez é a mãe de todas as virtudes.",a:"Aristóteles"}}},
   {id:903,cat:"courage",tr:{fr:{q:"Tenez bon. La tempête passera.",a:"Haruki Murakami"},en:{q:"Hold on. The storm will pass.",a:"Haruki Murakami"},es:{q:"Aguanta. La tormenta pasará.",a:"Haruki Murakami"},it:{q:"Tieni duro. La tempesta passerà.",a:"Haruki Murakami"},de:{q:"Beharr und du wirst triumphieren.",a:"Haruki Murakami"},pt:{q:"Aguente firme. A tempestade passará.",a:"Haruki Murakami"}}},
@@ -2373,15 +2478,24 @@ function draw(){
   var textColor = S_TCOLOR !== 'auto' ? S_TCOLOR : (lt ? "#1a0800" : "#ffffff");
   var goldColor = lt ? "rgba(80,40,0,0.8)" : "rgba(200,169,110,0.95)";
 
-  // 5. TAILLE DE POLICE avec multiplicateur slider
-  var maxW = 860;
-  var baseFontSize = 78 + S_TSIZE * TSIZE_STEP;
+  // 5. TAILLE DE POLICE avec multiplicateur slider — adaptée au format
+  // En paysage (16:9), largeur utile bien plus grande, on peut utiliser plus de colonnes
+  var isLandscape = (S_FMT === 'landscape');
+  var isStory = (S_FMT === 'story');
+  // Story 9:16 → H très grand, utiliser des % de H plus petits pour la police
+  var maxW = isLandscape ? Math.round(W * 0.72) : isStory ? Math.round(W * 0.82) : 860;
+  var maxLines = isLandscape ? 4 : isStory ? 7 : 5;
+  var baseFontSize = isLandscape
+    ? Math.round(H * 0.072) + S_TSIZE * TSIZE_STEP
+    : isStory
+      ? Math.round(H * 0.048) + S_TSIZE * TSIZE_STEP   // relatif H en Story
+      : 78 + S_TSIZE * TSIZE_STEP;
   var fontSize = baseFontSize;
   var lineH, lines;
-  while(fontSize >= 36){
+  while(fontSize >= 28){
     CTX.font = (F.style==="italic"?"italic ":"") + fontSize + "px " + F.fam;
     lines = wrapText(quote, maxW);
-    if(lines.length <= 5) break;
+    if(lines.length <= maxLines) break;
     fontSize -= 4;
   }
   lineH = fontSize * 1.6;
@@ -2424,22 +2538,27 @@ function draw(){
   CTX.restore();
 
   // 9. AUTEUR avec étoiles ✦ de chaque côté
+  var authorFontSize = Math.round(H * 0.035);
   var authorOffset = Math.round(H * 0.063);
+  // Safeguard: ensure author doesn't overflow bottom of canvas
+  var authorY = sepY + authorOffset;
+  var maxAuthorY = H - Math.round(H * 0.055);
+  if(authorY > maxAuthorY) authorY = maxAuthorY;
   CTX.save();
-  CTX.font = Math.round(H * 0.035) + "px Palatino,Georgia,serif";
+  CTX.font = authorFontSize + "px Palatino,Georgia,serif";
   CTX.textAlign = "center";
   CTX.fillStyle = goldColor;
   CTX.shadowColor = "rgba(0,0,0,0.9)";
   CTX.shadowBlur = 14;
   var authorStr = author;
   var authorW = CTX.measureText(authorStr).width;
-  CTX.fillText(authorStr, W/2, sepY + authorOffset);
+  CTX.fillText(authorStr, W/2, authorY);
   // Étoiles
   CTX.font = Math.round(H * 0.026) + "px Palatino,Georgia,serif";
   CTX.fillStyle = "rgba(200,169,110,0.7)";
   CTX.shadowBlur = 8;
-  CTX.fillText("\u2736", W/2 - authorW/2 - 36, sepY + authorOffset);
-  CTX.fillText("\u2736", W/2 + authorW/2 + 18, sepY + authorOffset);
+  CTX.fillText("\u2736", W/2 - authorW/2 - 36, authorY);
+  CTX.fillText("\u2736", W/2 + authorW/2 + 18, authorY);
   CTX.restore();
 
 }
@@ -2453,6 +2572,26 @@ function wrapText(text, maxW){
     else line = test;
   });
   if(line) lines.push(line);
+  // Rebalance: if last line is very short vs others, try to redistribute
+  if(lines.length >= 2){
+    var lastW = CTX.measureText(lines[lines.length-1]).width;
+    var prevW = CTX.measureText(lines[lines.length-2]).width;
+    // If last line < 35% of previous, merge last two and rewrap them
+    if(lastW < prevW * 0.35 && lines.length >= 2){
+      var merged = lines.slice(0,-2).concat([lines[lines.length-2]+' '+lines[lines.length-1]]);
+      // Rewrap last merged line at slightly smaller maxW
+      var subWords = merged[merged.length-1].split(' ');
+      var subLines = [], subLine = '';
+      var tightW = maxW * 0.88;
+      subWords.forEach(function(w){
+        var test = subLine ? subLine+' '+w : w;
+        if(CTX.measureText(test).width > tightW && subLine){ subLines.push(subLine); subLine=w; }
+        else subLine=test;
+      });
+      if(subLine) subLines.push(subLine);
+      lines = merged.slice(0,-1).concat(subLines);
+    }
+  }
   return lines;
 }
 
@@ -2490,7 +2629,12 @@ function onDatePicker(val){
 function fadeAndDraw(){
   var c = document.getElementById("CV");
   c.classList.add("fade");
-  setTimeout(function(){ draw(); c.classList.remove("fade"); }, 180);
+  setTimeout(function(){
+    draw();
+    c.classList.remove("fade");
+    if(window._updateCanvasHint) window._updateCanvasHint();
+    if(window._flashCanvasHint) window._flashCanvasHint();
+  }, 160);
 }
 
 // ─── RECHERCHE ────────────────────────────────────────────────────────────────
@@ -2561,19 +2705,42 @@ function showAuthorSuggestions(){
     if(!tr || tr.a==='Anonyme') return;
     counts[tr.a] = (counts[tr.a]||0) + 1;
   });
-  var top = Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).slice(0,12);
+  var top = Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).slice(0,15);
   if(!top.length){ resEl.style.display='none'; return; }
   cntEl.textContent = 'Auteurs populaires';
   var html = '<div class="sres-suggestions">';
   top.forEach(function(name){
-    html += '<button class="sres-author-chip" data-author="'+name+'" title="'+counts[name]+' citations">'+name+'</button>';
+    html += '<button class="sres-author-chip" data-author="'+name+'" title="'+counts[name]+' citations">'
+          + name + ' <span class="chip-count">'+counts[name]+'</span></button>';
   });
   html += '</div>';
   resEl.innerHTML = html;
   resEl.style.display='block';
   resEl.querySelectorAll('.sres-author-chip').forEach(function(btn){
     btn.addEventListener('click', function(){
-      document.getElementById("searchInp").value = this.dataset.author;
+      var authorName = this.dataset.author;
+      document.getElementById("searchInp").value = authorName;
+      // Filtrer toutes les citations de cet auteur
+      var matches = DB.filter(function(e){
+        return authorMatches(e, authorName);
+      });
+      if(matches.length){
+        // Choisir une citation aléatoire de cet auteur
+        var pick = matches[Math.floor(Math.random() * matches.length)];
+        S.q = pick; S.custom = null;
+        if(pick.cat !== S.cat){
+          S.cat = pick.cat;
+          document.querySelectorAll("#CR .pill").forEach(function(x){x.classList.toggle("on",x.dataset.v===S.cat);});
+          updateBadge();
+        }
+        if(!S.used[S.cat]) S.used[S.cat]=[];
+        if(S.used[S.cat].indexOf(pick.id)<0) S.used[S.cat].push(pick.id);
+        pushHistory(pick);
+        updateBadge();
+        translateAndDraw();
+        enableButtons();
+        toast(matches.length > 1 ? matches.length + ' citations de ' + authorName : 'Citation chargée !');
+      }
       doSearch();
     });
   });
@@ -2732,15 +2899,25 @@ document.getElementById("CR").addEventListener("click", function(e){
   document.querySelectorAll("#CR .pill").forEach(function(x){x.classList.toggle("on",x.dataset.v===S.cat);});
   updateBadge();
   saveState();
+  // Relancer la recherche avec le terme courant (pour que les résultats suivent la catégorie)
+  var sinp = document.getElementById("searchInp");
+  if(sinp && sinp.value.trim().length >= 2) doSearch();
 });
 
 function enableButtons(){
   document.getElementById("bSV").disabled = false;
+  var bsvj = document.getElementById("bSVJ"); if(bsvj) bsvj.disabled = false;
+  var bci  = document.getElementById("bCI");  if(bci)  bci.disabled  = false;
   document.getElementById("bCP").disabled = false;
   document.getElementById("bTR").disabled = false;
   var bfv = document.getElementById("bFV"); if(bfv) bfv.disabled = false;
   var bsh = document.getElementById("bSH"); if(bsh) bsh.disabled = false;
   updateFavBtn();
+  // Scroll canvas into view on mobile after new quote
+  if(window.innerWidth < 900){
+    var cv = document.getElementById('CV');
+    if(cv) cv.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
 }
 
 function newQ(){
@@ -2776,6 +2953,15 @@ function randomAll(){
   enableButtons();
   updateFavBtn();
   saveState();
+}
+
+function randomThemeOnly(){
+  // Change le thème aléatoirement SANS changer la catégorie ni la citation
+  S.th = ALL[Math.floor(Math.random()*ALL.length)].id;
+  document.querySelectorAll(".tbtn").forEach(function(x){x.classList.toggle("on",x.dataset.t===S.th);});
+  fadeAndDraw();
+  saveState();
+  showHint('Thème aléatoire');
 }
 function toggleCustom(){
   // Sur PC (≥900px), le bloc perso est toujours visible dans la card
@@ -2813,29 +2999,13 @@ function nextLang(){
 function saveImg(){
   if(!S.q) return;
 
-  // Construire le canvas d'export
+  // Exporter directement le canvas affiché (pas de re-rendu = pas de double overlay)
   var oc = document.createElement("canvas");
   oc.width = W; oc.height = H;
   var octx = oc.getContext("2d");
-  var t = ALL.find(function(x){return x.id===S.th;});
-  var lt = t && t.lt;
-
-  if(t && IMGS[t.id]){
-    try { drawImageCover(octx, IMGS[t.id], 0, 0, W, H); } catch(e){
-      var g=octx.createLinearGradient(0,0,W,H);
-      (t.grad||["#111","#333"]).forEach(function(c,i,a){g.addColorStop(i/(a.length-1),c);});
-      octx.fillStyle=g; octx.fillRect(0,0,W,H);
-    }
-  } else {
-    var stops=t?(t.grad||["#111","#333"]):["#111","#333"];
-    var g=octx.createLinearGradient(0,0,W,H);
-    stops.forEach(function(c,i,a){g.addColorStop(i/(a.length-1),c);});
-    octx.fillStyle=g; octx.fillRect(0,0,W,H);
+  try{ octx.drawImage(CV, 0, 0, W, H); } catch(e){
+    toast("Erreur export"); return;
   }
-  octx.fillStyle=lt?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.45)";
-  octx.fillRect(0,0,W,H);
-  try{ octx.drawImage(CV,0,0); }catch(e){}
-
 
   var filename = "citation-lumiere-"+Date.now()+".png";
 
@@ -2843,6 +3013,24 @@ function saveImg(){
     if(!blob){ toast("Erreur : canvas vide"); return; }
     _saveBlob(blob, filename);
   }, "image/png");
+}
+
+function saveImgJpeg(){
+  if(!S.q) return;
+  var oc = document.createElement("canvas");
+  oc.width = W; oc.height = H;
+  var octx = oc.getContext("2d");
+  // Fond blanc pour JPEG (pas de transparence)
+  octx.fillStyle = "#000";
+  octx.fillRect(0, 0, W, H);
+  try{ octx.drawImage(CV, 0, 0, W, H); } catch(e){
+    toast("Erreur export"); return;
+  }
+  var filename = "citation-lumiere-"+Date.now()+".jpg";
+  oc.toBlob(function(blob){
+    if(!blob){ toast("Erreur : canvas vide"); return; }
+    _saveBlob(blob, filename);
+  }, "image/jpeg", 0.88);
 }
 
 function _saveBlob(blob, filename){
@@ -2872,32 +3060,18 @@ function copyImg(){
   var oc = document.createElement("canvas");
   oc.width = W; oc.height = H;
   var octx = oc.getContext("2d");
-  var t = ALL.find(function(x){return x.id===S.th;});
-  var lt = t && t.lt;
-  if(t && IMGS[t.id]){
-    try { drawImageCover(octx, IMGS[t.id], 0, 0, W, H); } catch(e){}
-  } else {
-    var stops=t?(t.grad||["#111","#333"]):["#111","#333"];
-    var g=octx.createLinearGradient(0,0,W,H);
-    stops.filter(function(c){return typeof c==="string";}).forEach(function(c,i,a){g.addColorStop(i/(a.length-1),c);});
-    octx.fillStyle=g; octx.fillRect(0,0,W,H);
+  try{ octx.drawImage(CV, 0, 0, W, H); } catch(e){
+    toast("Non supporté"); return;
   }
-  octx.fillStyle=lt?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.45)"; octx.fillRect(0,0,W,H);
-  try{ octx.drawImage(CV,0,0); }catch(e){}
-
-
   oc.toBlob(function(blob){
     if(!blob){ toast("Non supporté"); return; }
-    // Essayer clipboard API
     if(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write){
       navigator.clipboard.write([new ClipboardItem({"image/png": blob})])
         .then(function(){ toast("Image copiée !"); })
         .catch(function(){
-          // Fallback : proposer d'enregistrer
           _saveBlob(blob, "citation-lumiere-"+Date.now()+".png");
         });
     } else {
-      // Pas de clipboard API → enregistrer directement
       _saveBlob(blob, "citation-lumiere-"+Date.now()+".png");
     }
   }, "image/png");
@@ -2962,7 +3136,7 @@ var _storage = (function(){
 
 function saveState(){
   try {
-    var toSave = {th:S.th, font:S.font, lang:S.lang, cat:S.cat, used:S.used};
+    var toSave = {th:S.th, font:S.font, lang:S.lang, cat:S.cat, used:S.used, uiLight:UI_LIGHT};
     _storage.setItem(LS_KEY_STATE, JSON.stringify(toSave));
     _storage.setItem(LS_KEY_FAVS,  JSON.stringify(FAVS));
   } catch(e){}
@@ -2974,7 +3148,6 @@ function loadState(){
     if(raw){
       var saved = JSON.parse(raw);
       if(saved.th){
-        // Valider que le thème existe encore dans NA
         var thValid = NA.some(function(t){ return t.id === saved.th; });
         S.th = thValid ? saved.th : NA[0].id;
       }
@@ -2982,6 +3155,12 @@ function loadState(){
       if(saved.lang) S.lang = saved.lang;
       if(saved.cat)  S.cat  = saved.cat;
       if(saved.used) S.used = saved.used;
+      if(saved.uiLight !== undefined){
+        UI_LIGHT = !!saved.uiLight;
+        document.body.classList.toggle('ui-light', UI_LIGHT);
+        var btn = document.getElementById('UTG');
+        if(btn) btn.innerHTML = UI_LIGHT ? '&#9728;' : '&#9790;';
+      }
     }
     var rawF = _storage.getItem(LS_KEY_FAVS);
     if(rawF) FAVS = JSON.parse(rawF);
@@ -3112,10 +3291,14 @@ function closeFavs(){
 // ================================================================
 function citationDuJour(){
   var now = new Date();
-  var seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+  // Seed stable : date + catégorie (pour que chaque catégorie donne une citation différente)
+  var catCode = 0;
+  for(var ci=0; ci<S.cat.length; ci++) catCode += S.cat.charCodeAt(ci);
+  var seed = (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) ^ (catCode * 31337);
+  seed = ((seed >>> 0) % 999983) || 1; // toujours positif, non-zéro
   var pool = DB.filter(function(x){ return x.cat === S.cat; });
   if(!pool.length) pool = DB;
-  var item = pool[seed % pool.length];
+  var item = pool[((seed % pool.length) + pool.length) % pool.length];
   S.q = item; S.custom = null;
   if(!S.used[S.cat]) S.used[S.cat] = [];
   if(S.used[S.cat].indexOf(item.id) < 0) S.used[S.cat].push(item.id);
@@ -3125,7 +3308,6 @@ function citationDuJour(){
   enableButtons();
   updateFavBtn();
   saveState();
-  // Afficher la citation dans le header sphinx
   var hdrBox = document.getElementById('hdrCitJour');
   var hdrTxt = document.getElementById('hdrCitTexte');
   var hdrAut = document.getElementById('hdrCitAuteur');
@@ -3156,24 +3338,10 @@ function shareNative(){
   var tr = S.q.tr[S.lang] || S.q.tr.fr;
   var text = '\u2728 \u201c' + tr.q + '\u201d\n\u2014 ' + tr.a + '\n\n#LumiereQuotidienne #citationdujour';
 
-  // Construire le canvas proprement (même logique que saveImg)
   var oc = document.createElement("canvas");
   oc.width = W; oc.height = H;
   var octx = oc.getContext("2d");
-  var t = ALL.find(function(x){return x.id===S.th;});
-  var lt = t && t.lt;
-  if(t && IMGS[t.id]){
-    try{ drawImageCover(octx, IMGS[t.id], 0, 0, W, H); }catch(e){}
-  } else {
-    var stops=t?(t.grad||["#111","#333"]):["#111","#333"];
-    var g=octx.createLinearGradient(0,0,W,H);
-    stops.forEach(function(c,i,a){g.addColorStop(i/(a.length-1),c);});
-    octx.fillStyle=g; octx.fillRect(0,0,W,H);
-  }
-  octx.fillStyle=lt?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.45)";
-  octx.fillRect(0,0,W,H);
-  try{ octx.drawImage(CV,0,0); }catch(e){}
-
+  try{ octx.drawImage(CV, 0, 0, W, H); } catch(e){}
 
   if(navigator.share){
     oc.toBlob(function(blob){
@@ -3202,6 +3370,7 @@ function toggleUITheme(){
   document.body.classList.toggle('ui-light', UI_LIGHT);
   var btn = document.getElementById('UTG');
   if(btn) btn.innerHTML = UI_LIGHT ? '&#9728;' : '&#9790;';
+  saveState();
 }
 
 
@@ -3241,22 +3410,69 @@ function prevQ(){
   saveState();
 }
 
+function nextQ(){
+  if(HIST_IDX >= HISTORY.length - 1) return;
+  HIST_IDX++;
+  var item = HISTORY[HIST_IDX];
+  S.q = item; S.custom = null;
+  if(item.cat !== S.cat){
+    S.cat = item.cat;
+    document.querySelectorAll('#CR .pill').forEach(function(x){ x.classList.toggle('on', x.dataset.v === S.cat); });
+    updateBadge();
+  }
+  translateAndDraw();
+  enableButtons();
+  updateFavBtn();
+  updateHistBtn();
+  saveState();
+}
+
 function updateHistBtn(){
-  var btn = document.getElementById('bPREV');
-  if(!btn) return;
-  btn.disabled = HIST_IDX <= 0;
-  btn.title = HIST_IDX > 0 ? 'Citation pr\u00e9c\u00e9dente (Alt+\u2190) \u2014 ' + HIST_IDX + ' dans l\'historique' : 'Pas d\'historique';
+  var bPrev = document.getElementById('bPREV');
+  var bNext = document.getElementById('bNEXT');
+  if(bPrev){
+    bPrev.disabled = HIST_IDX <= 0;
+    bPrev.title = HIST_IDX > 0 ? 'Pr\u00e9c\u00e9dente \u2014 ' + HIST_IDX + ' dans l\'historique' : 'Pas d\'historique';
+  }
+  if(bNext){
+    bNext.disabled = HIST_IDX >= HISTORY.length - 1;
+    bNext.title = HIST_IDX < HISTORY.length - 1 ? 'Suivante dans l\'historique' : 'Fin de l\'historique';
+  }
 }
 
 // ================================================================
 // RESET HISTORIQUE UTILISATION
 // ================================================================
 function resetUsed(){
-  if(!confirm('Réinitialiser l\'historique des citations vues ?\nTu reverras les citations déjà affichées.')) return;
-  S.used = {};
-  updateBadge();
-  saveState();
-  toast('Historique réinitialisé !');
+  showConfirmModal(
+    'Réinitialiser l\'historique des citations vues ?',
+    'Tu reverras les citations déjà affichées.',
+    function(){
+      S.used = {};
+      updateBadge();
+      saveState();
+      toast('Historique réinitialisé !');
+    }
+  );
+}
+
+function showConfirmModal(title, body, onConfirm){
+  var old = document.getElementById('_confirmModal');
+  if(old) old.remove();
+  var modal = document.createElement('div');
+  modal.id = '_confirmModal';
+  modal.style.cssText = 'position:fixed;inset:0;z-index:2100;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);font-family:Georgia,serif;';
+  modal.innerHTML = '<div style="background:linear-gradient(160deg,#120e02,#1e1600);border:1px solid rgba(200,169,110,.3);border-radius:18px;padding:24px 22px;max-width:320px;width:90%;text-align:center;">'
+    +'<div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#c8a96e;margin-bottom:10px;">'+title+'</div>'
+    +'<div style="font-size:11px;color:rgba(200,169,110,.65);margin-bottom:18px;">'+body+'</div>'
+    +'<div style="display:flex;gap:8px;justify-content:center;">'
+    +'<button id="_cmCancel" style="padding:8px 18px;border-radius:100px;border:1px solid rgba(200,169,110,.3);background:transparent;color:rgba(200,169,110,.7);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;">Annuler</button>'
+    +'<button id="_cmConfirm" style="padding:8px 18px;border-radius:100px;border:none;background:linear-gradient(135deg,#c8a96e,#f0cc60);color:#080600;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;font-weight:700;">Confirmer</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+  modal.querySelector('#_cmCancel').onclick = function(){ modal.remove(); };
+  modal.querySelector('#_cmConfirm').onclick = function(){ modal.remove(); onConfirm(); };
+  modal.onclick = function(e){ if(e.target===modal) modal.remove(); };
 }
 
 // ================================================================
@@ -3321,7 +3537,9 @@ document.addEventListener('keydown', function(e){
     case 'ArrowRight':
       e.preventDefault();
       if(kbdOpen) return;
-      newQ(); showHint('Suivante \u2192');
+      // Si on est en fin d'historique, nouvelle citation ; sinon avancer dans l'historique
+      if(HIST_IDX < HISTORY.length - 1){ nextQ(); showHint('Suivante \u2192'); }
+      else { newQ(); showHint('Nouvelle \u2192'); }
       break;
     case 'l': case 'L':
       if(kbdOpen) return;
@@ -3329,12 +3547,7 @@ document.addEventListener('keydown', function(e){
       break;
     case 't': case 'T':
       if(kbdOpen) return;
-      // Random theme
-      var randT = ALL[Math.floor(Math.random()*ALL.length)];
-      S.th = randT.id;
-      document.querySelectorAll('.tbtn').forEach(function(x){ x.classList.toggle('on', x.dataset.t === S.th); });
-      fadeAndDraw();
-      showHint('Th\u00e8me');
+      randomThemeOnly();
       break;
     case 'f': case 'F':
       if(kbdOpen) return;
@@ -3342,7 +3555,11 @@ document.addEventListener('keydown', function(e){
       break;
     case 's': case 'S':
       if(kbdOpen) return;
-      saveImg(); showHint('Enregistrer');
+      saveImg(); showHint('Enregistrer PNG');
+      break;
+    case 'j': case 'J':
+      if(kbdOpen) return;
+      saveImgJpeg(); showHint('Enregistrer JPG');
       break;
     case 'c': case 'C':
       if(kbdOpen) return;
@@ -3404,6 +3621,62 @@ document.addEventListener('keydown', function(e){
   }, {passive: true});
   cv.addEventListener('touchend', function(){ clearTimeout(longT); }, {passive: true});
   cv.addEventListener('touchmove', function(){ clearTimeout(longT); }, {passive: true});
+
+  // Clic souris sur le canvas → nouvelle citation du même auteur
+  cv.addEventListener('click', function(){
+    if(!S.q) return;
+    var tr = S.q.tr[S.lang] || S.q.tr.fr;
+    if(!tr || !tr.a || tr.a === 'Anonyme') { newQ(); return; }
+    var authorName = tr.a;
+    var matches = DB.filter(function(e){ return authorMatches(e, authorName); });
+    if(matches.length > 1){
+      var others = matches.filter(function(x){ return x.id !== S.q.id; });
+      var pick = others.length ? others[Math.floor(Math.random()*others.length)] : matches[Math.floor(Math.random()*matches.length)];
+      S.q = pick; S.custom = null;
+      if(pick.cat !== S.cat){
+        S.cat = pick.cat;
+        document.querySelectorAll('#CR .pill').forEach(function(x){ x.classList.toggle('on', x.dataset.v===S.cat); });
+        updateBadge();
+      }
+      if(!S.used[S.cat]) S.used[S.cat]=[];
+      if(S.used[S.cat].indexOf(pick.id)<0) S.used[S.cat].push(pick.id);
+      pushHistory(pick);
+      updateBadge();
+      translateAndDraw();
+      enableButtons();
+      updateFavBtn();
+      var cnt = matches.length;
+      showHint('\u2736 ' + authorName + (cnt>1?' ('+cnt+')':''));
+    } else {
+      newQ();
+    }
+  });
+
+  // Mettre à jour le hint texte selon l'auteur courant
+  function updateCanvasHint(){
+    var hint = document.getElementById('cvAuthorHint');
+    if(!hint) return;
+    if(!S.q){ hint.textContent = '\u2736 Cliquer : nouvelle citation'; return; }
+    var tr = S.q.tr[S.lang] || S.q.tr.fr;
+    if(!tr || !tr.a || tr.a === 'Anonyme'){ hint.textContent = '\u2736 Cliquer : nouvelle citation'; return; }
+    var cnt = DB.filter(function(e){ return authorMatches(e, tr.a); }).length;
+    hint.textContent = cnt > 1
+      ? '\u2736 Cliquer : autre citation de ' + tr.a + ' (' + cnt + ')'
+      : '\u2736 Cliquer : nouvelle citation';
+  }
+  // Exposer pour appel depuis translateAndDraw
+  window._updateCanvasHint = updateCanvasHint;
+
+  // Sur mobile, flasher brièvement le hint après chaque citation
+  window._flashCanvasHint = function(){
+    if(window.matchMedia('(hover:none)').matches){
+      var hint = document.getElementById('cvAuthorHint');
+      if(!hint) return;
+      hint.classList.add('mobile-show');
+      clearTimeout(hint._ft);
+      hint._ft = setTimeout(function(){ hint.classList.remove('mobile-show'); }, 2200);
+    }
+  };
 })();
 
 // ================================================================
@@ -3417,18 +3690,24 @@ function setFormat(fmt){
   var cv = document.getElementById('CV');
   if(fmt === 'story'){
     W = 1080; H = 1920;
-    cv.className = cv.className.replace('fmt-square','').replace('fmt-story','').trim() + ' fmt-story';
+    cv.className = cv.className.replace('fmt-square','').replace('fmt-story','').replace('fmt-landscape','').trim() + ' fmt-story';
+  } else if(fmt === 'landscape'){
+    W = 1920; H = 1080;
+    cv.className = cv.className.replace('fmt-square','').replace('fmt-story','').replace('fmt-landscape','').trim() + ' fmt-landscape';
   } else {
     W = 1080; H = 1080;
-    cv.className = cv.className.replace('fmt-square','').replace('fmt-story','').trim() + ' fmt-square';
+    cv.className = cv.className.replace('fmt-square','').replace('fmt-story','').replace('fmt-landscape','').trim() + ' fmt-square';
   }
   cv.width = W; cv.height = H;
   document.getElementById('fmtPost').classList.toggle('on', fmt==='post');
   document.getElementById('fmtStory').classList.toggle('on', fmt==='story');
-  // Sur PC : agrandir la colonne canvas en mode Story (9:16)
+  var fmtL = document.getElementById('fmtLandscape');
+  if(fmtL) fmtL.classList.toggle('on', fmt==='landscape');
+  // Sur PC : adapter la grille selon le format
   var appEl = document.querySelector('.app');
   if(appEl && window.matchMedia('(min-width:900px)').matches){
-    appEl.classList.toggle('story-mode', fmt === 'story');
+    appEl.classList.toggle('story-mode',    fmt === 'story');
+    appEl.classList.toggle('landscape-mode', fmt === 'landscape');
   }
   draw();
 }
@@ -3679,13 +3958,15 @@ updateBadge();
   <div class="kbd-box" onclick="event.stopPropagation()">
     <div class="kbd-title">&#9000; Raccourcis clavier</div>
     <div class="kbd-row"><span class="kbd-key">Espace</span><span class="kbd-desc">Nouvelle citation</span></div>
-    <div class="kbd-row"><span class="kbd-key">&#8592; / &#8594;</span><span class="kbd-desc">Citation précédente / suivante</span></div>
+    <div class="kbd-row"><span class="kbd-key">&#8592;</span><span class="kbd-desc">Citation précédente (historique)</span></div>
+    <div class="kbd-row"><span class="kbd-key">&#8594;</span><span class="kbd-desc">Citation suivante (historique)</span></div>
     <div class="kbd-row"><span class="kbd-key">L</span><span class="kbd-desc">Changer de langue</span></div>
-    <div class="kbd-row"><span class="kbd-key">T</span><span class="kbd-desc">Thème aléatoire</span></div>
+    <div class="kbd-row"><span class="kbd-key">T</span><span class="kbd-desc">Thème aléatoire (garde la citation)</span></div>
+    <div class="kbd-row"><span class="kbd-key">R</span><span class="kbd-desc">Tout aléatoire (catégorie + thème)</span></div>
     <div class="kbd-row"><span class="kbd-key">F</span><span class="kbd-desc">Ajouter / retirer des favoris</span></div>
-    <div class="kbd-row"><span class="kbd-key">S</span><span class="kbd-desc">Enregistrer l’image</span></div>
+    <div class="kbd-row"><span class="kbd-key">S</span><span class="kbd-desc">Enregistrer PNG</span></div>
+    <div class="kbd-row"><span class="kbd-key">J</span><span class="kbd-desc">Enregistrer JPG (léger)</span></div>
     <div class="kbd-row"><span class="kbd-key">C</span><span class="kbd-desc">Copier la caption</span></div>
-    <div class="kbd-row"><span class="kbd-key">R</span><span class="kbd-desc">Aléatoire (catégorie + thème)</span></div>
     <div class="kbd-row"><span class="kbd-key">Esc</span><span class="kbd-desc">Fermer</span></div>
     <div style="text-align:center;margin-top:14px">
       <button class="btn bout" onclick="hideKbd()" style="padding:7px 16px">Fermer</button>
