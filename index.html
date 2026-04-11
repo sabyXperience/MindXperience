@@ -620,9 +620,9 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   .btn-export { gap: 4px; margin-bottom: 0; grid-template-columns: repeat(3,1fr)!important; }
   .btn { padding:10px 8px; font-size:10px; letter-spacing:.8px; }
 
-  /* Recherche et perso : masquées sur mobile (boutons dédiés) */
+  /* Recherche, nav-export (col-3) : masquées sur mobile — nav buttons already in page */
   .pc-card-search,
-  .pc-col-actions .pc-card:last-child { display:none!important; }
+  .pc-card-navexport { display:none!important; }
 
   /* Langue : row compact */
   #LR { display:flex!important; flex-wrap:wrap; gap:4px; justify-content:center; margin-bottom:6px; }
@@ -740,9 +740,9 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   /* Grille tablette : hdr full width, col-left + col-actions à gauche, mid + right à droite */
   .hdr           { grid-column:1/-1; grid-row:1; }
   .pc-col-left   { grid-column:1; grid-row:2; display:flex!important; flex-direction:column; gap:8px; }
-  .pc-col-actions{ grid-column:1; grid-row:3; }
+  .pc-col-actions{ grid-column:1; grid-row:3; }  /* Nav+export mobile en bas col gauche */
   .pc-col-mid    { grid-column:2; grid-row:2; display:flex!important; flex-direction:column; gap:8px; overflow-y:auto; max-height:60vh; padding-right:4px; }
-  .pc-col-right  { grid-column:2; grid-row:3; overflow-y:auto; max-height:40vh; padding-right:4px; }
+  .pc-col-right  { grid-column:2; grid-row:3; overflow-y:auto; max-height:55vh; padding-right:4px; }
 
   /* canvas tablette */
   .cvwrap { max-width:100%; margin:0 auto 8px; overflow:hidden; }
@@ -765,7 +765,10 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   /* Actions tablette : pas de card wrappers visuels */
   .pc-col-actions .pc-card { background:none; border:none; padding:0; box-shadow:none; border-radius:0; }
   .pc-col-actions .pc-card + .pc-card { margin-top:8px; }
-  .pc-card-search, .pc-col-actions .pc-card:last-child { display:none!important; }
+  .pc-card-search,
+  .pc-card-navexport { display:none!important; }
+  /* Sur tablette, montrer les boutons nav mobile */
+  .pc-card-mobile-nav { display:block!important; }
 
   /* Contrôles */
   .tgrid { grid-template-columns:repeat(4,1fr)!important; }
@@ -849,7 +852,7 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   .app {
     flex:1; min-height:0; height:0;
     display:grid !important;
-    grid-template-columns: 1fr minmax(190px,250px) minmax(160px,210px) minmax(160px,210px) !important;
+    grid-template-columns: minmax(0,1fr) minmax(190px,250px) minmax(160px,210px) minmax(160px,210px) !important;
     grid-template-rows: auto minmax(0,1fr) !important;
     gap: 0 8px;
     padding: 12px 16px 12px;
@@ -872,12 +875,12 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
     grid-column:1; grid-row:2;
     display:flex!important; flex-direction:column;
     align-items:center; justify-content:flex-start;
-    /* height est défini par la grille (minmax(0,1fr)) */
-    min-height:0; overflow:hidden;
+    min-height:0; min-width:0; overflow:hidden;
+    /* Empêche tout débordement sur les colonnes voisines */
+    contain: layout;
   }
   .cvwrap {
-    /* Prend toute la hauteur disponible MOINS la rangée de swatches (~50px) */
-    flex:1; min-height:0; width:100%;
+    flex:1; min-height:0; min-width:0; width:100%;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
   }
@@ -899,8 +902,30 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   }
   #CV.fmt-square    { aspect-ratio:1/1!important; }
   #CV.fmt-story     { aspect-ratio:9/16!important; }
-  #CV.fmt-landscape { aspect-ratio:16/9!important; }
+  #CV.fmt-landscape { aspect-ratio:16/9!important; max-height:100%!important; max-width:100%!important; }
   .tcolor-swatch { width:26px!important; height:26px!important; }
+
+  /* ── MODE LANDSCAPE PC : canvas 16/9 dans col-1 ── */
+  .app.landscape-mode {
+    grid-template-columns: minmax(0,1fr) minmax(190px,250px) minmax(160px,210px) minmax(160px,210px) !important;
+  }
+  .app.landscape-mode .pc-col-left {
+    overflow:hidden;
+    justify-content:center;
+  }
+  .app.landscape-mode #CV {
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+  }
+
+  /* ── MODE STORY PC : canvas 9/16 plus étroit ── */
+  .app.story-mode {
+    grid-template-columns: minmax(0,320px) minmax(190px,250px) minmax(160px,210px) minmax(160px,210px) !important;
+  }
+  .app.story-mode .pc-col-left {
+    align-items:center;
+  }
 
   /* Col 2 : thèmes + police + format */
   .pc-col-mid {
@@ -924,10 +949,10 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   .pc-col-mid .format-toggle { margin-bottom:0; width:100%; display:flex; justify-content:center; gap:5px; }
   .ftoggle-btn { font-size:9px!important; padding:6px 8px!important; flex:1; }
 
-  /* Col 3 : langue + catégorie */
+  /* Col 3 : langue + catégorie + navigation + export */
   .pc-col-right {
     grid-column:3; grid-row:2;
-    display:flex!important; flex-direction:column; gap:7px;
+    display:flex!important; flex-direction:column; gap:5px;
     min-height:0; align-self:stretch; overflow-y:auto; overflow-x:hidden;
     padding-right:6px !important; align-items:stretch;
   }
@@ -937,8 +962,26 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   #LR .pill { padding:5px 3px!important; font-size:8.5px!important; text-align:center!important; width:100%; }
   #CR { display:grid!important; grid-template-columns:repeat(2,1fr)!important; gap:4px!important; width:100%; }
   #CR .pill { font-size:8.5px!important; padding:5px 3px!important; text-align:center!important; letter-spacing:.15px!important; width:100%; }
+  /* btn-nav dans col-3 : adapter les colonnes à la largeur disponible */
+  .pc-col-right .btn-nav {
+    grid-template-columns: 28px 28px 1fr 1fr 1fr 28px !important;
+    grid-template-rows: auto auto !important;
+    gap:3px!important; margin-bottom:0!important; width:100%;
+  }
+  .pc-col-right .btn-nav > :nth-child(1) { grid-column:1; grid-row:1; }
+  .pc-col-right .btn-nav > :nth-child(2) { grid-column:2; grid-row:1; }
+  .pc-col-right .btn-nav > :nth-child(3) { grid-column:3; grid-row:1; }
+  .pc-col-right .btn-nav > :nth-child(4) { grid-column:4; grid-row:1; }
+  .pc-col-right .btn-nav > :nth-child(5) { grid-column:5; grid-row:1; }
+  .pc-col-right .btn-nav > :nth-child(6) { grid-column:6; grid-row:1; }
+  .pc-col-right .btn-nav > :nth-child(7) { grid-column:1; grid-row:2; }
+  .pc-col-right .btn-nav > :nth-child(8) { grid-column:2; grid-row:2; }
+  .pc-col-right .btn-nav > :nth-child(9) { grid-column:3; grid-row:2; }
+  .pc-col-right .btn-nav .btn { padding:7px 2px!important; font-size:8px!important; letter-spacing:.2px!important; }
+  .pc-col-right .btn-export { display:grid!important; grid-template-columns:repeat(3,1fr)!important; gap:3px!important; margin-bottom:0!important; width:100%; }
+  .pc-col-right .btn-export .btn { padding:7px 3px!important; font-size:8px!important; }
 
-  /* Col 4 : actions */
+  /* Col 4 : recherche + personnalisation */
   .pc-col-actions {
     grid-column:4; grid-row:2;
     display:flex!important; flex-direction:column; gap:7px;
@@ -954,11 +997,9 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   .lbl-row { margin-bottom:3px!important; width:100%; }
   .cat-progress { margin-bottom:3px; width:100%; }
 
-  /* Navigation */
-  .btn-nav { display:grid!important; grid-template-columns:28px 28px 1fr 1fr 1fr 28px 28px 28px 28px!important; gap:3px!important; margin-bottom:0!important; width:100%; }
+  /* Navigation & Export — règles génériques PC (col-3 override ci-dessus) */
+  .btn-nav { display:grid!important; gap:3px!important; margin-bottom:0!important; width:100%; }
   .btn-nav .btn { padding:8px 3px!important; font-size:8.5px!important; letter-spacing:.3px!important; }
-
-  /* Export */
   .btn-export { display:grid!important; grid-template-columns:repeat(3,1fr)!important; gap:3px!important; margin-bottom:0!important; width:100%; }
   .btn-export .btn { padding:8px 4px!important; font-size:8.5px!important; }
 
@@ -971,8 +1012,10 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
   .date-inp[type=date]::-webkit-calendar-picker-indicator:hover { opacity:1; }
   .pc-card-search .search-results { max-height:130px; }
 
-  /* Masquer éléments mobile */
+  /* Masquer éléments mobile uniquement */
   .col-left,.col-right { display:none!important; }
+  /* Boutons nav/export mobile masqués sur PC (ils sont dans pc-col-right) */
+  .pc-card-mobile-nav { display:none!important; }
 }
 
 </style>
@@ -1081,35 +1124,71 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
     <button class="pill" data-v="gratitude">🙏 Gratitude</button>
     <button class="pill" data-v="philo">🏛️ Philo</button>
   </div>
+  <div class="sep"><div class="sl"></div><div class="sd"></div><div class="sr"></div></div>
+  <!-- Navigation (col-3) — visible PC uniquement -->
+  <div class="pc-card pc-card-navexport">
+  <div class="lbl">Navigation</div>
+  <div class="btn-nav">
+    <button class="btn bhistory btn-icon" id="bPREV" onclick="prevQ()" disabled title="Précédente" aria-label="Citation précédente">&#8592;</button>
+    <button class="btn bhistory btn-icon" id="bNEXT" onclick="nextQ()" disabled title="Suivante (historique)" aria-label="Citation suivante dans l'historique">&#8594;</button>
+    <button class="btn bgold btn-main" onclick="newQ()" aria-label="Nouvelle citation">&#10022; Nouvelle</button>
+    <button class="btn brand btn-main" onclick="randomAll()" aria-label="Citation et thème aléatoires">&#9733; Aléat.</button>
+    <button class="btn bdujour btn-main" onclick="citationDuJour()" aria-label="Citation du jour">&#128197; Jour</button>
+    <button class="btn bout btn-icon" id="bTR" onclick="nextLang()" disabled title="Langue suivante" aria-label="Changer de langue">&#127758;</button>
+    <button class="btn bout btn-icon" id="bRandTheme" onclick="randomThemeOnly()" title="Thème aléatoire" aria-label="Thème aléatoire">&#127777;</button>
+    <button class="btn bout btn-icon" onclick="showKbd()" title="Raccourcis clavier" aria-label="Raccourcis">&#9000;</button>
+    <button class="btn breset btn-icon" onclick="resetUsed()" title="Réinitialiser l'historique" aria-label="Réinitialiser">&#8635;</button>
+  </div>
+  </div><!-- /pc-card nav -->
+  <!-- Export (col-3) — visible PC uniquement -->
+  <div class="pc-card pc-card-navexport">
+  <div class="lbl">Export</div>
+  <div class="btn-export">
+    <button class="btn bfav" id="bFV" onclick="toggleFav()" disabled aria-label="Ajouter aux favoris">&#9825; Favori<span class="fav-badge" id="favBadge" style="display:none">0</span></button>
+    <button class="btn bsave" id="bSV" onclick="saveImg()" disabled aria-label="Enregistrer en PNG">&#128190; PNG</button>
+    <button class="btn bcopy" id="bSVJ" onclick="saveImgJpeg()" disabled aria-label="Enregistrer en JPEG">&#128190; JPG</button>
+    <button class="btn bclip" id="bCI" onclick="copyImg()" disabled aria-label="Copier l'image">&#128203; Img</button>
+    <button class="btn bcopy" id="bCP" onclick="copyC()" disabled aria-label="Copier la citation">&#128203; Texte</button>
+    <button class="btn bshare" id="bSH" onclick="shareNative()" disabled aria-label="Partager">&#128257; Partager</button>
+  </div>
+  </div><!-- /pc-card export -->
 </div>
 
-<!-- COL 4 : navigation + export + recherche + personnalisation -->
+<!-- COL 4 : nav+export mobile + recherche+perso PC -->
 <div class="pc-col-actions">
-  <!-- Card Navigation -->
-  <div class="pc-card">
-    <div class="lbl">Navigation</div>
+  <!-- Nav+Export visibles sur mobile/tablette uniquement (masqués PC via CSS) -->
+  <div class="pc-card pc-card-mobile-nav">
+    <div class="lbl" style="display:none">Navigation</div>
     <div class="btn-nav">
-      <button class="btn bhistory btn-icon" id="bPREV" onclick="prevQ()" disabled title="Précédente" aria-label="Citation précédente">&#8592;</button>
-      <button class="btn bhistory btn-icon" id="bNEXT" onclick="nextQ()" disabled title="Suivante (historique)" aria-label="Citation suivante dans l'historique">&#8594;</button>
-      <button class="btn bgold btn-main" onclick="newQ()" aria-label="Nouvelle citation">&#10022; Nouvelle</button>
-      <button class="btn brand btn-main" onclick="randomAll()" aria-label="Citation et thème aléatoires">&#9733; Aléat.</button>
-      <button class="btn bdujour btn-main" onclick="citationDuJour()" aria-label="Citation du jour">&#128197; Jour</button>
-      <button class="btn bout btn-icon" id="bTR" onclick="nextLang()" disabled title="Langue suivante" aria-label="Changer de langue">&#127758;</button>
-      <button class="btn bout btn-icon" id="bRandTheme" onclick="randomThemeOnly()" title="Thème aléatoire (garder la catégorie)" aria-label="Thème aléatoire">&#127777;</button>
-      <button class="btn bout btn-icon" onclick="showKbd()" title="Raccourcis clavier" aria-label="Afficher les raccourcis clavier">&#9000;</button>
-      <button class="btn breset btn-icon" onclick="resetUsed()" title="Réinitialiser l'historique" aria-label="Réinitialiser l'historique des citations">&#8635;</button>
+      <button class="btn bhistory btn-icon" onclick="prevQ()" title="Précédente" aria-label="Citation précédente">&#8592;</button>
+      <button class="btn bhistory btn-icon" onclick="nextQ()" title="Suivante" aria-label="Citation suivante">&#8594;</button>
+      <button class="btn bgold btn-main" onclick="newQ()" aria-label="Nouvelle">&#10022; Nouvelle</button>
+      <button class="btn brand btn-main" onclick="randomAll()" aria-label="Aléatoire">&#9733; Aléat.</button>
+      <button class="btn bdujour btn-main" onclick="citationDuJour()" aria-label="Du jour">&#128197; Jour</button>
+      <button class="btn bout btn-icon" onclick="nextLang()" title="Langue" aria-label="Langue">&#127758;</button>
+      <button class="btn bout btn-icon" onclick="randomThemeOnly()" title="Thème aléatoire" aria-label="Thème">&#127777;</button>
+      <button class="btn bout btn-icon" onclick="showKbd()" title="Raccourcis" aria-label="Raccourcis">&#9000;</button>
+      <button class="btn breset btn-icon" onclick="resetUsed()" title="Réinitialiser" aria-label="Réinitialiser">&#8635;</button>
+    </div>
+    <div class="btn-export" style="margin-top:4px">
+      <button class="btn bfav" onclick="toggleFav()" aria-label="Favoris">&#9825; Favori</button>
+      <button class="btn bsave" onclick="saveImg()" aria-label="PNG">&#128190; PNG</button>
+      <button class="btn bcopy" onclick="saveImgJpeg()" aria-label="JPG">&#128190; JPG</button>
+      <button class="btn bclip" onclick="copyImg()" aria-label="Copier img">&#128203; Img</button>
+      <button class="btn bcopy" onclick="copyC()" aria-label="Copier texte">&#128203; Texte</button>
+      <button class="btn bshare" onclick="shareNative()" aria-label="Partager">&#128257; Partager</button>
     </div>
   </div>
-  <!-- Card Export -->
-  <div class="pc-card">
-    <div class="lbl">Export</div>
-    <div class="btn-export">
-      <button class="btn bfav" id="bFV" onclick="toggleFav()" disabled aria-label="Ajouter aux favoris">&#9825; Favori<span class="fav-badge" id="favBadge" style="display:none">0</span></button>
-      <button class="btn bsave" id="bSV" onclick="saveImg()" disabled aria-label="Enregistrer en PNG">&#128190; PNG</button>
-      <button class="btn bcopy" id="bSVJ" onclick="saveImgJpeg()" disabled aria-label="Enregistrer en JPEG">&#128190; JPG</button>
-      <button class="btn bclip" id="bCI" onclick="copyImg()" disabled aria-label="Copier l'image">&#128203; Img</button>
-      <button class="btn bcopy" id="bCP" onclick="copyC()" disabled aria-label="Copier la citation">&#128203; Texte</button>
-      <button class="btn bshare" id="bSH" onclick="shareNative()" disabled aria-label="Partager la citation">&#128257; Partager</button>
+  <!-- Boutons mobile : recherche + perso -->
+  <div class="br pc-card-mobile-nav" style="margin-bottom:4px">
+    <button class="btn bout btn-full" id="bSearch" onclick="toggleSearch()" style="width:100%">&#128269; Rechercher une citation</button>
+    <button class="btn bout btn-full" id="bCustom" onclick="toggleCustom()" style="width:100%">&#9998; Citation personnalisée</button>
+  </div>
+  <div class="custom-wrap" id="CW">
+    <textarea class="custom-inp" id="cQuote" rows="2" placeholder="Ta citation…"></textarea>
+    <div class="custom-row">
+      <input class="custom-author" id="cAuthor" type="text" placeholder="Auteur">
+      <button class="btn bgold" onclick="applyCustom()" style="padding:5px 10px">&#10003;</button>
     </div>
   </div>
   <!-- Card Recherche — toujours visible sur PC -->
@@ -1128,15 +1207,13 @@ canvas:active { cursor: grabbing; opacity: 0.9; }
       <div class="search-results" id="searchRes" style="display:none"></div>
     </div>
   </div>
-  <!-- Card Personnaliser -->
+  <!-- Card Personnaliser PC -->
   <div class="pc-card">
-    <div class="custom-wrap open" id="CW" style="display:block!important">
-      <div class="lbl" style="margin-bottom:6px">Personnaliser</div>
-      <textarea class="custom-inp" id="cQuote" rows="2" placeholder="Ta citation…"></textarea>
-      <div class="custom-row">
-        <input class="custom-author" id="cAuthor" type="text" placeholder="Auteur">
-        <button class="btn bgold" onclick="applyCustom()" style="padding:5px 10px" aria-label="Appliquer la citation personnalisée">&#10003;</button>
-      </div>
+    <div class="lbl" style="margin-bottom:6px">Personnaliser</div>
+    <textarea class="custom-inp" id="cQuotePC" rows="2" placeholder="Ta citation…" oninput="document.getElementById('cQuote').value=this.value"></textarea>
+    <div class="custom-row">
+      <input class="custom-author" id="cAuthorPC" type="text" placeholder="Auteur" oninput="document.getElementById('cAuthor').value=this.value">
+      <button class="btn bgold" onclick="syncAndApply()" style="padding:5px 10px" aria-label="Appliquer">&#10003;</button>
     </div>
     <div class="date-wrap" style="margin-top:6px">
       <span class="date-label">&#128197;</span>
@@ -3365,6 +3442,14 @@ function shareNative(){
 // THEME INTERFACE CLAIR / SOMBRE
 // ================================================================
 var UI_LIGHT = false;
+function syncAndApply(){
+  var qPC = document.getElementById('cQuotePC');
+  var aPC = document.getElementById('cAuthorPC');
+  if(qPC) document.getElementById('cQuote').value = qPC.value;
+  if(aPC) document.getElementById('cAuthor').value = aPC.value;
+  applyCustom();
+}
+
 function toggleUITheme(){
   UI_LIGHT = !UI_LIGHT;
   document.body.classList.toggle('ui-light', UI_LIGHT);
